@@ -1,6 +1,7 @@
 FROM composer:2 AS vendor
 WORKDIR /app
 COPY apps/cms/ .
+COPY shared/php /shared/php
 RUN composer install --no-interaction --prefer-dist --no-dev --no-scripts \
     && composer dump-autoload --optimize --classmap-authoritative
 
@@ -15,6 +16,7 @@ RUN apk add --no-cache $PHPIZE_DEPS \
 WORKDIR /var/www/cms
 COPY --from=vendor /app/vendor ./vendor
 COPY apps/cms/ .
+COPY shared/php /var/www/shared/php
 RUN mkdir -p var/cache var/log && chown -R www-data:www-data var
 
 USER www-data

@@ -1,20 +1,72 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <style>
-        body { font-family: system-ui, sans-serif; margin: 2rem; background: #fafafa; color: #1a1a1a; }
-        main { max-width: 40rem; }
-        h1 { font-size: 1.5rem; font-weight: 600; }
-        p { color: #444; }
-    </style>
-</head>
-<body>
-<main>
-    <h1>Привет, мир</h1>
-    <p>{{ title }} — Symfony 7.4 LTS, Docker.</p>
-</main>
-</body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} — Agent CMS Light{% endblock %}
+
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start">
+        {# Боковая панель — заготовка #}
+        <aside class="w-full shrink-0 lg:w-52" aria-label="Панель">
+            <div class="rounded-lg border border-zinc-200 bg-white p-3 shadow-sm">
+                <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Панель</p>
+                <ul class="space-y-0.5 text-sm">
+                    <li>
+                        <span class="flex items-center gap-2 rounded-md bg-zinc-100 px-2.5 py-2 font-medium text-zinc-900">
+                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                            Обзор
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-2 rounded-md px-2.5 py-2 text-zinc-400">Записи</span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-2 rounded-md px-2.5 py-2 text-zinc-400">Поиск</span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-2 rounded-md px-2.5 py-2 text-zinc-400">Журнал</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="flex min-w-0 flex-1 flex-col gap-4">
+            {# Блок на главной #}
+            <section class="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
+                <h1 class="text-xl font-semibold tracking-tight text-zinc-900">{{ greeting }}</h1>
+                <p class="mt-2 max-w-prose text-sm leading-relaxed text-zinc-600">
+                    Внешняя цифровая память: workspace на диске, типы из YAML, админка из модульных блоков.
+                    Это заготовка главной страницы в светлом компактном стиле.
+                </p>
+            </section>
+
+            {# Список хранилищ — заготовка #}
+            <section class="rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="storages-heading">
+                <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3">
+                    <h2 id="storages-heading" class="text-sm font-semibold text-zinc-900">Хранилища</h2>
+                    <span class="rounded-md border border-dashed border-zinc-300 px-2 py-1 text-xs text-zinc-400">+ Создать</span>
+                </div>
+                <ul class="divide-y divide-zinc-100">
+                    {% for storage in storages %}
+                        <li class="flex items-center gap-3 px-4 py-3 text-sm hover:bg-zinc-50">
+                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-zinc-100 text-xs font-medium text-zinc-600">
+                                {{ storage.initials }}
+                            </span>
+                            <div class="min-w-0 flex-1">
+                                <p class="truncate font-medium text-zinc-900">{{ storage.name }}</p>
+                                <p class="truncate text-xs text-zinc-500">{{ storage.path }}</p>
+                            </div>
+                            <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {{ storage.active ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500' }}">
+                                {% if storage.active %}активно{% else %}архив{% endif %}
+                            </span>
+                        </li>
+                    {% else %}
+                        <li class="px-4 py-6 text-center text-sm text-zinc-500">Пока нет хранилищ</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
