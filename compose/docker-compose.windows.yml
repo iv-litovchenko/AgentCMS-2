@@ -1,0 +1,11 @@
+# Windows (Docker Desktop, WSL2 backend рекомендуется):
+# docker compose -f docker-compose.yml -f compose/docker-compose.windows.yml up --build
+
+services:
+  cms:
+    volumes:
+      - ../apps/cms:/var/www/cms
+      - cms_vendor:/var/www/cms/vendor
+
+volumes:
+  cms_vendor:

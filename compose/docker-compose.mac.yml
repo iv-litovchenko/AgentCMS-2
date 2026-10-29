@@ -1,0 +1,11 @@
+# Mac (Docker Desktop): используйте вместе с корневым файлом
+# docker compose -f docker-compose.yml -f compose/docker-compose.mac.yml up --build
+
+services:
+  cms:
+    volumes:
+      - ../apps/cms:/var/www/cms
+      - cms_vendor:/var/www/cms/vendor
+
+volumes:
+  cms_vendor:

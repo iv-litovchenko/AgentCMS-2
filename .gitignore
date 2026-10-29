@@ -1,4 +1,8 @@
-# Laravel
+# Symfony CMS app
+/apps/cms/vendor/
+/apps/cms/var/
+
+# Laravel (legacy paths)
 /vendor/
 /node_modules/
 /public/hot

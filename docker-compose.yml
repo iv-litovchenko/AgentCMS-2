@@ -1,0 +1,77 @@
+# Agent CMS Light — общая заготовка (Mac / Linux / Windows + Docker Desktop)
+# Запуск: docker compose up --build
+# CMS:     http://localhost:8080/
+# HTTPS:   https://localhost:8443/ (self-signed)
+# MCP stub: http://localhost:8080/mcp/
+# API stub: http://localhost:8080/api/
+
+name: agent-cms-light
+
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: docker/proxy/Dockerfile
+    ports:
+      - "8080:80"
+      - "8443:443"
+    depends_on:
+      - cms
+      - mcp
+      - api
+    networks:
+      - agentcms
+
+  cms:
+    build:
+      context: .
+      dockerfile: docker/cms/Dockerfile
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      DATABASE_URL: postgresql://agentcms:agentcms@db:5432/agentcms?serverVersion=16&charset=utf8
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - agentcms
+
+  mcp:
+    build:
+      context: .
+      dockerfile: docker/mcp/Dockerfile
+    networks:
+      - agentcms
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    networks:
+      - agentcms
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: agentcms
+      POSTGRES_PASSWORD: agentcms
+      POSTGRES_DB: agentcms
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - agentcms
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - agentcms
+
+volumes:
+  pgdata:
+
+networks:
+  agentcms:
+    driver: bridge
