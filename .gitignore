@@ -1,0 +1,45 @@
+# Laravel
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+/storage/app/workspaces/
+/bootstrap/cache/*.php
+/bootstrap/cache/packages.php
+/bootstrap/cache/services.php
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Docker
+docker-compose.override.yml
+
+# Build & tools
+/dist/
+/build/
+/.npm/
+/.yarn/
+npm-debug.log*
+yarn-error.log*
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Cursor (local plans only)
+.cursor/plans/
