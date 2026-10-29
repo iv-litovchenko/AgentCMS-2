@@ -1,0 +1,117 @@
+{% use "form_div_layout.html.twig" %}
+
+{% block form_row %}
+    <div class="mb-5">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{% block form_label %}
+    {% if label is not same as(false) %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' block mb-2 text-sm font-medium text-gray-900')|trim}) %}
+        <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{- label -}}
+            {% if required %}
+                <span class="text-red-600">*</span>
+            {% endif %}
+        </label>
+    {% endif %}
+{% endblock %}
+
+{% block form_widget_simple %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100 read-only:bg-gray-100 read-only:text-gray-500')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block textarea_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block choice_widget_expanded %}
+    <div {{ block('widget_container_attributes') }} class="grid gap-2">
+        {%- for child in form %}
+            <div class="flex items-center">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, {
+                    translation_domain: choice_translation_domain,
+                    label_attr: {class: 'ms-2 text-sm font-medium text-gray-900'},
+                }) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{% endblock %}
+
+{% block checkbox_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block radio_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block submit_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 cursor-pointer')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block reset_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 cursor-pointer')|trim}) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <ul class="mt-2 list-none space-y-1 text-sm text-red-600">
+            {% for error in errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block demo_form_enableNotifications_row %}
+    <div class="mb-5">
+        <span class="block mb-2 text-sm font-medium text-gray-900">Уведомления (toggle)</span>
+        <label class="inline-flex items-center cursor-pointer">
+            {{ form_widget(form) }}
+            <span class="ms-3 text-sm text-gray-600">Включить оповещения</span>
+        </label>
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{% block demo_form_enableNotifications_widget %}
+    <input type="checkbox" id="{{ id }}" name="{{ full_name }}" class="sr-only peer" value="1"{% if checked %} checked="checked"{% endif %}{% if disabled %} disabled="disabled"{% endif %}>
+    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+{% endblock %}
+
+{% block demo_form_progressLevel_row %}
+    <div class="mb-5">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <p class="mt-1 text-xs text-gray-500">Flowbite range slider</p>
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{% block demo_form_progressLevel_widget %}
+    <input type="range" id="{{ id }}" name="{{ full_name }}" min="0" max="100" step="1" value="{{ value }}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"{% if disabled %} disabled="disabled"{% endif %}>
+{% endblock %}
+
+{% block demo_form_agreeTerms_row %}
+    <div class="mb-5 flex items-center">
+        {{ form_widget(form) }}
+        {{ form_label(form, null, {label_attr: {class: 'ms-2 text-sm font-medium text-gray-900'}}) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

@@ -7,3 +7,5 @@ services:
 
     App\:
         resource: '../src/'
+        exclude:
+            - '../src/DemoBlockBundle/DemoBlockBundle.php'

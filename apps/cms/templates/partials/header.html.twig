@@ -1,11 +1,31 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
 <header class="border-b border-zinc-200 bg-white">
-    <div class="mx-auto flex h-12 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <a href="{{ path('home') }}" class="flex items-center gap-2 text-sm font-semibold tracking-tight text-zinc-900">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 sm:px-6">
+        <a href="{{ path('home') }}" class="flex shrink-0 items-center gap-2 text-sm font-semibold tracking-tight text-zinc-900">
             <span class="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900 text-xs font-bold text-white">A</span>
             Agent CMS Light
         </a>
-        <nav class="flex items-center gap-1 text-sm text-zinc-600" aria-label="Основное">
-            <span class="rounded-md px-2.5 py-1.5 font-medium text-zinc-900 bg-zinc-100">Главная</span>
+        <nav class="flex flex-wrap items-center justify-end gap-1 text-sm text-zinc-600" aria-label="Основное">
+            <a href="{{ path('home') }}"
+               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'home' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                Главная
+            </a>
+            <a href="{{ path('home_compact') }}"
+               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'home_compact' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                Compact
+            </a>
+            <a href="{{ path('demo_form') }}"
+               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'demo_form' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                Demo form
+            </a>
+            <a href="{{ path('tailwind_demo') }}"
+               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'tailwind_demo' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                Tailwind
+            </a>
+            <a href="{{ path('flowbite_demo') }}"
+               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'flowbite_demo' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                Flowbite
+            </a>
             <span class="rounded-md px-2.5 py-1.5 text-zinc-400 cursor-default" title="Скоро">Хранилища</span>
             <span class="rounded-md px-2.5 py-1.5 text-zinc-400 cursor-default" title="Скоро">Настройки</span>
         </nav>

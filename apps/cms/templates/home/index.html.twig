@@ -3,16 +3,21 @@
 {% block title %}{{ title }} — Agent CMS Light{% endblock %}
 
 {% block body %}
+    {% set is_compact = compact|default(false) %}
     {% include 'partials/header.html.twig' %}
 
-    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start">
+    {% if is_compact %}
+        <p class="mx-auto max-w-6xl px-4 pt-3 text-xs text-zinc-500 sm:px-6">Компактный режим · <a href="{{ path('home') }}" class="text-blue-600 hover:underline">обычный вид</a></p>
+    {% endif %}
+
+    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col {{ is_compact ? 'gap-2 px-3 py-3 sm:px-4' : 'gap-4 px-4 py-6 sm:px-6' }} lg:flex-row lg:items-start">
         {# Боковая панель — заготовка #}
-        <aside class="w-full shrink-0 lg:w-52" aria-label="Панель">
-            <div class="rounded-lg border border-zinc-200 bg-white p-3 shadow-sm">
+        <aside class="w-full shrink-0 {{ is_compact ? 'lg:w-44' : 'lg:w-52' }}" aria-label="Панель">
+            <div class="rounded-lg border border-zinc-200 bg-white {{ is_compact ? 'p-2' : 'p-3' }} shadow-sm">
                 <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Панель</p>
-                <ul class="space-y-0.5 text-sm">
+                <ul class="space-y-0.5 {{ is_compact ? 'text-xs' : 'text-sm' }}">
                     <li>
-                        <span class="flex items-center gap-2 rounded-md bg-zinc-100 px-2.5 py-2 font-medium text-zinc-900">
+                        <span class="flex items-center gap-2 rounded-md bg-zinc-100 {{ is_compact ? 'px-2 py-1.5' : 'px-2.5 py-2' }} font-medium text-zinc-900">
                             <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                             Обзор
                         </span>
@@ -30,26 +35,28 @@
             </div>
         </aside>
 
-        <div class="flex min-w-0 flex-1 flex-col gap-4">
+        <div class="flex min-w-0 flex-1 flex-col {{ is_compact ? 'gap-2' : 'gap-4' }}">
             {# Блок на главной #}
-            <section class="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-                <h1 class="text-xl font-semibold tracking-tight text-zinc-900">{{ greeting }}</h1>
-                <p class="mt-2 max-w-prose text-sm leading-relaxed text-zinc-600">
+            <section class="rounded-lg border border-zinc-200 bg-white {{ is_compact ? 'p-3' : 'p-5' }} shadow-sm">
+                <h1 class="{{ is_compact ? 'text-lg' : 'text-xl' }} font-semibold tracking-tight text-zinc-900">{{ greeting }}</h1>
+                <p class="mt-1 max-w-prose {{ is_compact ? 'text-xs leading-snug' : 'text-sm leading-relaxed' }} text-zinc-600">
                     Внешняя цифровая память: workspace на диске, типы из YAML, админка из модульных блоков.
                     Это заготовка главной страницы в светлом компактном стиле.
                 </p>
             </section>
 
+            {% include '@DemoBlock/block.html.twig' %}
+
             {# Список хранилищ — заготовка #}
             <section class="rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="storages-heading">
-                <div class="flex items-center justify-between border-b border-zinc-100 px-4 py-3">
-                    <h2 id="storages-heading" class="text-sm font-semibold text-zinc-900">Хранилища</h2>
+                <div class="flex items-center justify-between border-b border-zinc-100 {{ is_compact ? 'px-3 py-2' : 'px-4 py-3' }}">
+                    <h2 id="storages-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">Хранилища</h2>
                     <span class="rounded-md border border-dashed border-zinc-300 px-2 py-1 text-xs text-zinc-400">+ Создать</span>
                 </div>
                 <ul class="divide-y divide-zinc-100">
                     {% for storage in storages %}
-                        <li class="flex items-center gap-3 px-4 py-3 text-sm hover:bg-zinc-50">
-                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-zinc-100 text-xs font-medium text-zinc-600">
+                        <li class="flex items-center gap-2 {{ is_compact ? 'px-3 py-2 text-xs' : 'gap-3 px-4 py-3 text-sm' }} hover:bg-zinc-50">
+                            <span class="flex {{ is_compact ? 'h-7 w-7' : 'h-9 w-9' }} shrink-0 items-center justify-center rounded-md bg-zinc-100 text-xs font-medium text-zinc-600">
                                 {{ storage.initials }}
                             </span>
                             <div class="min-w-0 flex-1">
