@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 
 {% block title %}Flowbite showcase — Agent CMS Light{% endblock %}
 
@@ -12,9 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 {% endblock %}
 
-{% block body %}
-    {% include 'partials/header.html.twig' %}
-
+{% block main %}
     <main class="mx-auto max-w-6xl flex-1 px-4 py-8 sm:px-6">
         <header class="mb-10 border-b border-gray-200 pb-6">
             <h1 class="text-3xl font-bold text-gray-900">Flowbite showcase</h1>
@@ -297,6 +295,4 @@
             </div>
         </section>
     </main>
-
-    {% include 'partials/footer.html.twig' %}
 {% endblock %}

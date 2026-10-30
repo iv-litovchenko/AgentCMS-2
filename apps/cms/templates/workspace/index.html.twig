@@ -1,0 +1,68 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Хранилища — Agent CMS Light{% endblock %}
+
+{% block main %}
+    <main class="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h1 class="text-xl font-semibold tracking-tight text-zinc-900">Хранилища</h1>
+                <p class="mt-1 text-sm text-zinc-600">Workspace на диске — YAML в каталоге <code class="rounded bg-zinc-100 px-1 text-xs">workspaces/</code></p>
+            </div>
+            <a href="{{ path('workspace_new') }}"
+               class="inline-flex items-center rounded-lg bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800">
+                + Создать
+            </a>
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <section class="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
+            {% if workspaces is empty %}
+                <p class="px-4 py-10 text-center text-sm text-zinc-500">Пока нет хранилищ. <a href="{{ path('workspace_new') }}" class="text-blue-600 hover:underline">Создать первое</a></p>
+            {% else %}
+                <ul class="divide-y divide-zinc-100">
+                    {% for ws in workspaces %}
+                        <li class="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div class="flex min-w-0 flex-1 gap-3">
+                                {% include 'workspace/_avatar.html.twig' with {avatar: ws.avatar, initials: ws.initials, size: 'h-10 w-10'} %}
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <a href="{{ path('workspace_show', {slug: ws.slug}) }}"
+                                           class="font-medium text-zinc-900 hover:text-blue-600 hover:underline">{{ ws.name }}</a>
+                                        <span class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs font-medium text-zinc-600" title="Порядок сортировки">#{{ ws.sort_order }}</span>
+                                    </div>
+                                    <p class="truncate text-xs text-zinc-500">{{ ws.folder }}</p>
+                                    {% if ws.description %}
+                                        <p class="mt-1 line-clamp-2 text-xs text-zinc-600">{{ ws.description }}</p>
+                                    {% endif %}
+                                    <p class="mt-1 text-xs text-zinc-400">
+                                        {{ ws.location == 'server' ? 'Сервер' : 'Локально' }}
+                                        · ID {{ ws.id }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex shrink-0 flex-wrap items-center gap-2">
+                                <a href="{{ path('workspace_edit', {id: ws.id}) }}"
+                                   class="rounded-md border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50">
+                                    Edit
+                                </a>
+                                <form method="post" action="{{ path('workspace_delete', {id: ws.id}) }}" onsubmit="return confirm('Удалить хранилище «{{ ws.name|e('js') }}»?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete_workspace_' ~ ws.id) }}">
+                                    <button type="submit"
+                                            class="rounded-md border border-red-200 bg-red-50 px-3 py-1.5 text-sm text-red-700 hover:bg-red-100">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}

@@ -26,7 +26,10 @@
                class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'flowbite_demo' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
                 Flowbite
             </a>
-            <span class="rounded-md px-2.5 py-1.5 text-zinc-400 cursor-default" title="Скоро">Хранилища</span>
+            <a href="{{ path('workspace_index') }}"
+               class="rounded-md px-2.5 py-1.5 {% if currentRoute starts with 'workspace_' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                Хранилища
+            </a>
             <span class="rounded-md px-2.5 py-1.5 text-zinc-400 cursor-default" title="Скоро">Настройки</span>
         </nav>
     </div>

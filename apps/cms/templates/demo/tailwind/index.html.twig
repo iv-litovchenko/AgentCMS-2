@@ -1,10 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 
 {% block title %}Tailwind showcase — Agent CMS Light{% endblock %}
 
-{% block body %}
+{% block main %}
     {% set is_compact = compact|default(false) %}
-    {% include 'partials/header.html.twig' %}
 
     <main class="mx-auto max-w-6xl flex-1 {{ is_compact ? 'px-3 py-4 sm:px-4' : 'px-4 py-8 sm:px-6' }}">
         <header class="{{ is_compact ? 'mb-6 pb-4' : 'mb-10 pb-6' }} border-b border-zinc-200">
@@ -278,8 +277,6 @@ $cms = 'Agent CMS Light';</code></pre>
             </div>
         </section>
     </main>
-
-    {% include 'partials/footer.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

@@ -53,7 +53,7 @@ class DemoFormController extends AbstractController
             return $this->redirectToRoute('demo_form', $redirectParams);
         }
 
-        return $this->render('demo_form/index.html.twig', [
+        return $this->render('demo/form/index.html.twig', [
             'form' => $form->createView(),
             'compact' => $compact,
         ]);

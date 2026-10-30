@@ -1,10 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 
 {% block title %}{{ title }} — Agent CMS Light{% endblock %}
 
-{% block body %}
+{% block main %}
     {% set is_compact = compact|default(false) %}
-    {% include 'partials/header.html.twig' %}
 
     {% if is_compact %}
         <p class="mx-auto max-w-6xl px-4 pt-3 text-xs text-zinc-500 sm:px-6">Компактный режим · <a href="{{ path('home') }}" class="text-blue-600 hover:underline">обычный вид</a></p>
@@ -51,20 +50,26 @@
             <section class="rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="storages-heading">
                 <div class="flex items-center justify-between border-b border-zinc-100 {{ is_compact ? 'px-3 py-2' : 'px-4 py-3' }}">
                     <h2 id="storages-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">Хранилища</h2>
-                    <span class="rounded-md border border-dashed border-zinc-300 px-2 py-1 text-xs text-zinc-400">+ Создать</span>
+                    <a href="{{ path('workspace_new') }}"
+                       class="rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-50">
+                        + Создать
+                    </a>
                 </div>
                 <ul class="divide-y divide-zinc-100">
                     {% for storage in storages %}
                         <li class="flex items-center gap-2 {{ is_compact ? 'px-3 py-2 text-xs' : 'gap-3 px-4 py-3 text-sm' }} hover:bg-zinc-50">
-                            <span class="flex {{ is_compact ? 'h-7 w-7' : 'h-9 w-9' }} shrink-0 items-center justify-center rounded-md bg-zinc-100 text-xs font-medium text-zinc-600">
-                                {{ storage.initials }}
-                            </span>
+                            {% include 'workspace/_avatar.html.twig' with {
+                                avatar: storage.avatar,
+                                initials: storage.initials,
+                                size: is_compact ? 'h-7 w-7' : 'h-9 w-9'
+                            } %}
                             <div class="min-w-0 flex-1">
-                                <p class="truncate font-medium text-zinc-900">{{ storage.name }}</p>
+                                <a href="{{ path('workspace_show', {slug: storage.slug}) }}"
+                                   class="truncate font-medium text-zinc-900 hover:text-blue-600 hover:underline">{{ storage.name }}</a>
                                 <p class="truncate text-xs text-zinc-500">{{ storage.path }}</p>
                             </div>
-                            <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {{ storage.active ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500' }}">
-                                {% if storage.active %}активно{% else %}архив{% endif %}
+                            <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {% if storage.location == 'server' %}bg-blue-50 text-blue-700{% else %}bg-emerald-50 text-emerald-700{% endif %}">
+                                {% if storage.location == 'server' %}сервер{% else %}локально{% endif %}
                             </span>
                         </li>
                     {% else %}
@@ -74,6 +79,4 @@
             </section>
         </div>
     </div>
-
-    {% include 'partials/footer.html.twig' %}
 {% endblock %}

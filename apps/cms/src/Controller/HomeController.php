@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\DemoBlockBundle\Service\DemoBlockService;
 use App\Service\GreetingService;
+use App\Service\WorkspaceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,10 +15,16 @@ class HomeController extends AbstractController
 
     private DemoBlockService $demoBlockService;
 
-    public function __construct(GreetingService $greetingService, DemoBlockService $demoBlockService)
-    {
+    private WorkspaceService $workspaceService;
+
+    public function __construct(
+        GreetingService $greetingService,
+        DemoBlockService $demoBlockService,
+        WorkspaceService $workspaceService
+    ) {
         $this->greetingService = $greetingService;
         $this->demoBlockService = $demoBlockService;
+        $this->workspaceService = $workspaceService;
     }
 
     #[Route('/', name: 'home')]
@@ -39,34 +46,28 @@ class HomeController extends AbstractController
             'title' => 'Agent CMS Light',
             'greeting' => $this->greetingService->getMessage(),
             'demo_block' => $this->demoBlockService->getBlockData(),
-            'storages' => $this->getStorages(),
+            'storages' => $this->buildStoragesForView(),
         ]);
     }
 
     /**
-     * @return list<array{name: string, path: string, initials: string, active: bool}>
+     * @return list<array{id: string, slug: string, name: string, path: string, initials: string, location: string, avatar: string}>
      */
-    private function getStorages(): array
+    private function buildStoragesForView(): array
     {
-        return [
-            [
-                'name' => 'Основной workspace',
-                'path' => 'storage/app/workspaces/demo-main',
-                'initials' => 'OW',
-                'active' => true,
-            ],
-            [
-                'name' => 'Песочница',
-                'path' => 'storage/app/workspaces/demo-sandbox',
-                'initials' => 'П',
-                'active' => true,
-            ],
-            [
-                'name' => 'Архив 2025',
-                'path' => 'storage/app/workspaces/archive-2025',
-                'initials' => 'A',
-                'active' => false,
-            ],
-        ];
+        $storages = [];
+        foreach ($this->workspaceService->list() as $workspace) {
+            $storages[] = [
+                'id' => $workspace['id'],
+                'slug' => $workspace['slug'],
+                'name' => $workspace['name'],
+                'path' => $workspace['folder'],
+                'initials' => $this->workspaceService->initialsFromName($workspace['name']),
+                'location' => $workspace['location'],
+                'avatar' => $workspace['avatar'],
+            ];
+        }
+
+        return $storages;
     }
 }

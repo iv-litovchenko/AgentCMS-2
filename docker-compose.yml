@@ -32,6 +32,9 @@ services:
       DATABASE_URL: postgresql://agentcms:agentcms@db:5432/agentcms?serverVersion=16&charset=utf8
       REDIS_URL: redis://redis:6379
       DEFAULT_URI: http://localhost:8080
+      WORKSPACES_DIR: /var/www/workspaces
+    volumes:
+      - ./workspaces:/var/www/workspaces
     depends_on:
       db:
         condition: service_started

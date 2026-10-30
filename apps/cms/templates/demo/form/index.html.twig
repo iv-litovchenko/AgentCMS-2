@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 
 {% set is_compact = compact|default(false) %}
 {% if is_compact %}
-    {% form_theme form 'form/compact_layout.html.twig' %}
+    {% form_theme form 'form/themes/compact_layout.html.twig' %}
 {% else %}
-    {% form_theme form 'form/flowbite_layout.html.twig' %}
+    {% form_theme form 'form/themes/flowbite_layout.html.twig' %}
 {% endif %}
 
 {% block title %}Demo form — Agent CMS Light{% endblock %}
@@ -19,9 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 {% endblock %}
 
-{% block body %}
-    {% include 'partials/header.html.twig' %}
-
+{% block main %}
     <main class="mx-auto w-full max-w-2xl flex-1 {{ is_compact ? 'px-3 py-3 sm:px-4' : 'px-4 py-6 sm:px-6' }}">
         <section class="rounded-lg border border-gray-200 bg-white {{ is_compact ? 'p-3' : 'p-6' }} shadow-sm">
             <h1 class="{{ is_compact ? 'text-lg' : 'text-xl' }} font-semibold tracking-tight text-gray-900">Demo form</h1>
@@ -66,6 +64,4 @@
             {{ form_end(form, {render_rest: false}) }}
         </section>
     </main>
-
-    {% include 'partials/footer.html.twig' %}
 {% endblock %}

@@ -1,4 +1,6 @@
 parameters:
+    app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
+    app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
 
 services:
     _defaults:
@@ -9,3 +11,7 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DemoBlockBundle/DemoBlockBundle.php'
+
+    App\Service\WorkspaceService:
+        arguments:
+            $workspacesDir: '%app.workspaces_dir%'
