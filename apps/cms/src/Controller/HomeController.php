@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\DemoBlockBundle\Service\DemoBlockService;
-use App\Service\GreetingService;
 use App\Service\WorkspaceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,18 +10,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    private GreetingService $greetingService;
-
     private DemoBlockService $demoBlockService;
 
     private WorkspaceService $workspaceService;
 
-    public function __construct(
-        GreetingService $greetingService,
-        DemoBlockService $demoBlockService,
-        WorkspaceService $workspaceService
-    ) {
-        $this->greetingService = $greetingService;
+    public function __construct(DemoBlockService $demoBlockService, WorkspaceService $workspaceService)
+    {
         $this->demoBlockService = $demoBlockService;
         $this->workspaceService = $workspaceService;
     }
@@ -44,7 +37,6 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'compact' => $compact,
             'title' => 'Agent CMS Light',
-            'greeting' => $this->greetingService->getMessage(),
             'demo_block' => $this->demoBlockService->getBlockData(),
             'storages' => $this->buildStoragesForView(),
         ]);

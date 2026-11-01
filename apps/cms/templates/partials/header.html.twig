@@ -1,36 +1,72 @@
 {% set currentRoute = app.request.attributes.get('_route') %}
+{% set profileName = 'Администратор' %}
+{% set profileEmail = 'user@cms.local' %}
+{% set profileInitials = 'А' %}
 <header class="border-b border-zinc-200 bg-white">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 sm:px-6">
         <a href="{{ path('home') }}" class="flex shrink-0 items-center gap-2 text-sm font-semibold tracking-tight text-zinc-900">
             <span class="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900 text-xs font-bold text-white">A</span>
             Agent CMS Light
         </a>
-        <nav class="flex flex-wrap items-center justify-end gap-1 text-sm text-zinc-600" aria-label="Основное">
-            <a href="{{ path('home') }}"
-               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'home' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                Главная
-            </a>
-            <a href="{{ path('home_compact') }}"
-               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'home_compact' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                Compact
-            </a>
-            <a href="{{ path('demo_form') }}"
-               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'demo_form' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                Demo form
-            </a>
-            <a href="{{ path('tailwind_demo') }}"
-               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'tailwind_demo' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                Tailwind
-            </a>
-            <a href="{{ path('flowbite_demo') }}"
-               class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'flowbite_demo' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                Flowbite
-            </a>
-            <a href="{{ path('workspace_index') }}"
-               class="rounded-md px-2.5 py-1.5 {% if currentRoute starts with 'workspace_' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                Хранилища
-            </a>
-            <span class="rounded-md px-2.5 py-1.5 text-zinc-400 cursor-default" title="Скоро">Настройки</span>
-        </nav>
+
+        <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+            <nav class="flex flex-wrap items-center gap-1 text-sm text-zinc-600" aria-label="Основное">
+                <a href="{{ path('home') }}"
+                   class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'home' or currentRoute == 'home_compact' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                    Главная
+                </a>
+                <a href="{{ path('workspace_index') }}"
+                   class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'workspace_index' or currentRoute == 'workspace_new' or currentRoute == 'workspace_edit' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                    Хранилища
+                </a>
+                <a href="{{ path('typography') }}"
+                   class="rounded-md px-2.5 py-1.5 {% if currentRoute == 'typography' %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                    Типография
+                </a>
+            </nav>
+
+            <div class="hidden h-5 w-px bg-zinc-200 sm:block" aria-hidden="true"></div>
+
+            <details class="group relative">
+                <summary class="flex cursor-pointer list-none items-center gap-2 rounded-md border border-transparent py-1 pl-1 pr-2 text-sm hover:bg-zinc-50 [&::-webkit-details-marker]:hidden">
+                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-xs font-semibold text-zinc-700" aria-hidden="true">{{ profileInitials }}</span>
+                    <span class="hidden max-w-[8rem] truncate text-left sm:block">
+                        <span class="block truncate font-medium text-zinc-900">{{ profileName }}</span>
+                        <span class="block truncate text-xs text-zinc-500">{{ profileEmail }}</span>
+                    </span>
+                    <svg class="h-4 w-4 shrink-0 text-zinc-400 transition group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                    </svg>
+                </summary>
+                <div class="absolute right-0 z-50 mt-1 min-w-[12rem] rounded-lg border border-zinc-200 bg-white py-1 text-sm shadow-lg" role="menu">
+                    <div class="border-b border-zinc-100 px-3 py-2 sm:hidden">
+                        <p class="truncate font-medium text-zinc-900">{{ profileName }}</p>
+                        <p class="truncate text-xs text-zinc-500">{{ profileEmail }}</p>
+                    </div>
+                    <span role="menuitem"
+                          class="block cursor-default px-3 py-2 text-zinc-400"
+                          title="Скоро">
+                        Профиль
+                    </span>
+                    <span role="menuitem"
+                          class="block cursor-default px-3 py-2 text-zinc-400"
+                          title="Скоро">
+                        Настройки
+                    </span>
+                    <div class="my-1 border-t border-zinc-100"></div>
+                    <a href="{{ path('home_compact') }}"
+                       role="menuitem"
+                       class="block px-3 py-2 {% if currentRoute == 'home_compact' %}bg-zinc-100 font-medium text-zinc-900{% else %}text-zinc-700 hover:bg-zinc-50{% endif %}">
+                        Главная (compact)
+                    </a>
+                    <div class="my-1 border-t border-zinc-100"></div>
+                    <span role="menuitem"
+                          class="block cursor-default px-3 py-2 text-zinc-400"
+                          title="Скоро">
+                        Выйти
+                    </span>
+                </div>
+            </details>
+        </div>
     </div>
 </header>

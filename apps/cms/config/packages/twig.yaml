@@ -1,4 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals:
+        app_version: '%app.version%'
     form_themes:
         - 'form/themes/tailwind_layout.html.twig'

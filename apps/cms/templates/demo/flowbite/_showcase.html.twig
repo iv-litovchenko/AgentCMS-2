@@ -1,26 +1,5 @@
-{% extends 'layouts/app.html.twig' %}
-
-{% block title %}Flowbite showcase — Agent CMS Light{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-{% endblock %}
-
-{% block main %}
-    <main class="mx-auto max-w-6xl flex-1 px-4 py-8 sm:px-6">
-        <header class="mb-10 border-b border-gray-200 pb-6">
-            <h1 class="text-3xl font-bold text-gray-900">Flowbite showcase</h1>
-            <p class="mt-2 text-sm text-gray-600">Components from <a href="https://flowbite.com/docs/getting-started/introduction/" class="text-blue-600 hover:underline">Flowbite docs</a> (CDN).</p>
-        </header>
-
         {# 1 Buttons #}
-        <section id="buttons" class="mb-14 scroll-mt-20">
+        <section id="fb-buttons" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">1) Buttons</h2>
             <div class="flex flex-wrap gap-2 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">Default</button>
@@ -41,7 +20,7 @@
         </section>
 
         {# 2 Button group & dropdown #}
-        <section id="button-groups" class="mb-14 scroll-mt-20">
+        <section id="fb-button-groups" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">2) Button group & dropdown</h2>
             <div class="flex flex-wrap items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -63,7 +42,7 @@
         </section>
 
         {# 3 Alerts #}
-        <section id="alerts" class="mb-14 scroll-mt-20">
+        <section id="fb-alerts" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">3) Alerts</h2>
             <div class="space-y-4">
                 <div id="alert-info" class="flex items-center p-4 text-blue-800 rounded-lg bg-blue-50" role="alert">
@@ -92,7 +71,7 @@
         </section>
 
         {# 4 Badges #}
-        <section id="badges" class="mb-14 scroll-mt-20">
+        <section id="fb-badges" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">4) Badges</h2>
             <div class="flex flex-wrap gap-2 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Default</span>
@@ -113,7 +92,7 @@
         </section>
 
         {# 5 Cards #}
-        <section id="cards" class="mb-14 scroll-mt-20">
+        <section id="fb-cards" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">5) Cards</h2>
             <div class="grid gap-4 md:grid-cols-2">
                 <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
@@ -140,7 +119,7 @@
         </section>
 
         {# 6 Forms #}
-        <section id="forms" class="mb-14 scroll-mt-20">
+        <section id="fb-forms" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">6) Forms</h2>
             <div class="grid gap-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm md:grid-cols-2">
                 <div><label for="fb-text" class="block mb-2 text-sm font-medium text-gray-900">Input</label><input type="text" id="fb-text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Name"></div>
@@ -166,7 +145,7 @@
         </section>
 
         {# 7 Modal #}
-        <section id="modals" class="mb-14 scroll-mt-20">
+        <section id="fb-modals" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">7) Modal</h2>
             <button data-modal-target="flowbite-showcase-modal" data-modal-toggle="flowbite-showcase-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5" type="button">Open modal</button>
             <div id="flowbite-showcase-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -188,7 +167,7 @@
         </section>
 
         {# 8 Dropdown menu #}
-        <section id="dropdowns" class="mb-14 scroll-mt-20">
+        <section id="fb-dropdowns" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">8) Dropdown menu</h2>
             <button id="menuDropdownButton" data-dropdown-toggle="menuDropdown" class="inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5" type="button">Open menu</button>
             <div id="menuDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
@@ -202,7 +181,7 @@
         </section>
 
         {# 9 Tabs #}
-        <section id="tabs" class="mb-14 scroll-mt-20">
+        <section id="fb-tabs" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">9) Tabs & pills</h2>
             <div class="mb-4 border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500" id="flowbite-tab" data-tabs-toggle="#flowbite-tab-content" role="tablist">
@@ -221,7 +200,7 @@
         </section>
 
         {# 10 Navbar #}
-        <section id="navbar" class="mb-14 scroll-mt-20">
+        <section id="fb-navbar" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">10) Navbar example</h2>
             <nav class="bg-white border-gray-200 rounded-lg border shadow-sm">
                 <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -238,7 +217,7 @@
         </section>
 
         {# 11 Breadcrumb & pagination #}
-        <section id="breadcrumb" class="mb-14 scroll-mt-20">
+        <section id="fb-breadcrumb" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">11) Breadcrumb & pagination</h2>
             <nav class="flex mb-4" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -258,7 +237,7 @@
         </section>
 
         {# 12 Timeline / list group #}
-        <section id="timeline" class="mb-14 scroll-mt-20">
+        <section id="fb-timeline" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">12) Timeline & list group</h2>
             <ol class="relative border-s border-gray-200 ms-3 mb-6">
                 <li class="mb-6 ms-6"><span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white"><span class="h-2 w-2 rounded-full bg-blue-600"></span></span><h3 class="flex items-center mb-1 text-sm font-semibold text-gray-900">Step one</h3><time class="block mb-2 text-xs font-normal leading-none text-gray-400">Today</time><p class="text-sm text-gray-600">Indexed workspace YAML.</p></li>
@@ -272,7 +251,7 @@
         </section>
 
         {# 13 Spinners & progress #}
-        <section id="progress" class="mb-14 scroll-mt-20">
+        <section id="fb-progress" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">13) Spinners & progress</h2>
             <div class="flex flex-wrap items-center gap-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <div role="status"><svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 96.9801 33.5539C95.1945 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2151 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg><span class="sr-only">Loading...</span></div>
@@ -281,7 +260,7 @@
         </section>
 
         {# 14 Toast #}
-        <section id="toast" class="mb-14 scroll-mt-20">
+        <section id="fb-toast" class="mb-14 scroll-mt-20">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">14) Toast</h2>
             <div id="toast-static" class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow border border-gray-200" role="alert">
                 <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
@@ -294,5 +273,3 @@
                 </button>
             </div>
         </section>
-    </main>
-{% endblock %}

@@ -9,10 +9,37 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class DemoFormController extends AbstractController
+class TypographyController extends AbstractController
 {
-    #[Route('/demo-form', name: 'demo_form', methods: ['GET', 'POST'])]
+    #[Route('/typography', name: 'typography', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
+    {
+        return $this->renderTypography($request);
+    }
+
+    #[Route('/demo-form', name: 'demo_form', methods: ['GET', 'POST'])]
+    public function legacyDemoForm(Request $request): Response
+    {
+        if ($request->isMethod('GET')) {
+            return $this->redirectToTypographyFragment($request, 'demo-form');
+        }
+
+        return $this->renderTypography($request);
+    }
+
+    #[Route('/tailwind-demo', name: 'tailwind_demo', methods: ['GET'])]
+    public function legacyTailwindDemo(Request $request): Response
+    {
+        return $this->redirectToTypographyFragment($request, 'tailwind');
+    }
+
+    #[Route('/flowbite-demo', name: 'flowbite_demo', methods: ['GET'])]
+    public function legacyFlowbiteDemo(Request $request): Response
+    {
+        return $this->redirectToTypographyFragment($request, 'flowbite');
+    }
+
+    private function renderTypography(Request $request): Response
     {
         $compact = $request->query->getBoolean('compact');
         $data = new DemoFormData();
@@ -50,12 +77,22 @@ class DemoFormController extends AbstractController
                 $redirectParams['compact'] = 1;
             }
 
-            return $this->redirectToRoute('demo_form', $redirectParams);
+            return $this->redirectToRoute('typography', $redirectParams + ['_fragment' => 'demo-form']);
         }
 
-        return $this->render('demo/form/index.html.twig', [
+        return $this->render('typography/index.html.twig', [
             'form' => $form->createView(),
             'compact' => $compact,
         ]);
+    }
+
+    private function redirectToTypographyFragment(Request $request, string $fragment): Response
+    {
+        $params = [];
+        if ($request->query->getBoolean('compact')) {
+            $params['compact'] = 1;
+        }
+
+        return $this->redirectToRoute('typography', $params + ['_fragment' => $fragment]);
     }
 }

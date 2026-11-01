@@ -1,4 +1,5 @@
 parameters:
+    app.version: '0.0.1'
     app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
     app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
 

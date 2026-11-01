@@ -2,8 +2,12 @@
 
 services:
   cms:
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: "1"
     volumes:
       - ../apps/cms:/var/www/cms
+      - ../shared/php:/var/www/shared/php
       - cms_vendor:/var/www/cms/vendor
 
 volumes:

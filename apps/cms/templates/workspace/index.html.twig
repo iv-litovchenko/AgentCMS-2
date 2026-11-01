@@ -46,19 +46,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="flex shrink-0 flex-wrap items-center gap-2">
-                                <a href="{{ path('workspace_edit', {id: ws.id}) }}"
-                                   class="rounded-md border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50">
-                                    Edit
-                                </a>
-                                <form method="post" action="{{ path('workspace_delete', {id: ws.id}) }}" onsubmit="return confirm('Удалить хранилище «{{ ws.name|e('js') }}»?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete_workspace_' ~ ws.id) }}">
-                                    <button type="submit"
-                                            class="rounded-md border border-red-200 bg-red-50 px-3 py-1.5 text-sm text-red-700 hover:bg-red-100">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
+                            {% include 'workspace/_list_actions.html.twig' with {id: ws.id, name: ws.name} %}
                         </li>
                     {% endfor %}
                 </ul>

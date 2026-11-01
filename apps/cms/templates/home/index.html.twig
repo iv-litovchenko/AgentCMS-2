@@ -35,15 +35,6 @@
         </aside>
 
         <div class="flex min-w-0 flex-1 flex-col {{ is_compact ? 'gap-2' : 'gap-4' }}">
-            {# Блок на главной #}
-            <section class="rounded-lg border border-zinc-200 bg-white {{ is_compact ? 'p-3' : 'p-5' }} shadow-sm">
-                <h1 class="{{ is_compact ? 'text-lg' : 'text-xl' }} font-semibold tracking-tight text-zinc-900">{{ greeting }}</h1>
-                <p class="mt-1 max-w-prose {{ is_compact ? 'text-xs leading-snug' : 'text-sm leading-relaxed' }} text-zinc-600">
-                    Внешняя цифровая память: workspace на диске, типы из YAML, админка из модульных блоков.
-                    Это заготовка главной страницы в светлом компактном стиле.
-                </p>
-            </section>
-
             {% include '@DemoBlock/block.html.twig' %}
 
             {# Список хранилищ — заготовка #}
@@ -57,20 +48,25 @@
                 </div>
                 <ul class="divide-y divide-zinc-100">
                     {% for storage in storages %}
-                        <li class="flex items-center gap-2 {{ is_compact ? 'px-3 py-2 text-xs' : 'gap-3 px-4 py-3 text-sm' }} hover:bg-zinc-50">
-                            {% include 'workspace/_avatar.html.twig' with {
-                                avatar: storage.avatar,
-                                initials: storage.initials,
-                                size: is_compact ? 'h-7 w-7' : 'h-9 w-9'
-                            } %}
-                            <div class="min-w-0 flex-1">
-                                <a href="{{ path('workspace_show', {slug: storage.slug}) }}"
-                                   class="truncate font-medium text-zinc-900 hover:text-blue-600 hover:underline">{{ storage.name }}</a>
-                                <p class="truncate text-xs text-zinc-500">{{ storage.path }}</p>
+                        <li class="flex flex-col gap-2 {{ is_compact ? 'px-3 py-2' : 'gap-3 px-4 py-3' }} sm:flex-row sm:items-center sm:justify-between hover:bg-zinc-50">
+                            <a href="{{ path('workspace_show', {slug: storage.slug}) }}"
+                               class="flex min-w-0 flex-1 items-center gap-2 {{ is_compact ? 'text-xs' : 'gap-3 text-sm' }} text-inherit">
+                                {% include 'workspace/_avatar.html.twig' with {
+                                    avatar: storage.avatar,
+                                    initials: storage.initials,
+                                    size: is_compact ? 'h-7 w-7' : 'h-9 w-9'
+                                } %}
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate font-medium text-zinc-900 hover:text-blue-600 hover:underline">{{ storage.name }}</p>
+                                    <p class="truncate text-xs text-zinc-500">{{ storage.path }}</p>
+                                </div>
+                                <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {% if storage.location == 'server' %}bg-blue-50 text-blue-700{% else %}bg-emerald-50 text-emerald-700{% endif %}">
+                                    {% if storage.location == 'server' %}сервер{% else %}локально{% endif %}
+                                </span>
+                            </a>
+                            <div class="pl-9 sm:pl-0">
+                                {% include 'workspace/_list_actions.html.twig' with {id: storage.id, name: storage.name} %}
                             </div>
-                            <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {% if storage.location == 'server' %}bg-blue-50 text-blue-700{% else %}bg-emerald-50 text-emerald-700{% endif %}">
-                                {% if storage.location == 'server' %}сервер{% else %}локально{% endif %}
-                            </span>
                         </li>
                     {% else %}
                         <li class="px-4 py-6 text-center text-sm text-zinc-500">Пока нет хранилищ</li>

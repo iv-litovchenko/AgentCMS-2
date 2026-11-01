@@ -1,0 +1,26 @@
+# Локальная разработка: код с хоста в контейнер без rebuild.
+# Скопируйте: cp docker-compose.override.example.yml docker-compose.override.yml
+# Compose подхватит override автоматически при `docker compose up`.
+#
+# Монтируется:
+#   apps/cms      → /var/www/cms
+#   shared/php    → /var/www/shared/php  (autoload AgentCmsLight\Shared)
+# vendor — именованный том (не затирается bind-mount'ом).
+#
+# Первый запуск / после смены composer.json (в образе vendor без --dev):
+#   docker run --rm -v "$PWD/apps/cms:/app" -v "$PWD/shared/php:/shared/php" \
+#     -v agent-cms-light_cms_vendor:/app/vendor -w /app composer:2 \
+#     composer install --no-interaction
+
+services:
+  cms:
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: "1"
+    volumes:
+      - ./apps/cms:/var/www/cms
+      - ./shared/php:/var/www/shared/php
+      - cms_vendor:/var/www/cms/vendor
+
+volumes:
+  cms_vendor:
