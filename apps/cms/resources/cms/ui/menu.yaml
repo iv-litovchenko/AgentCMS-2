@@ -13,8 +13,6 @@ apps:
       sections:
         - label: Хорошие практики
           slug: practices
-        - label: Типография
-          slug: typography
         - label: API
           slug: api
         - label: MCP
@@ -28,6 +26,22 @@ apps:
       name: windows
     - label: Командер
       name: commander
+    - label: Типография
+      route: app_section
+      route_params:
+        name: documentation
+        section: typography
+      active_on:
+        route: app_section
+        name: documentation
+        section: typography
+
+# Сервисы на поддоменах: {subdomain}.{PUBLIC_BASE_DOMAIN}
+services:
+  items:
+    - label: QwenPaw
+      subdomain: qwenpaw
+      description: Сервис QwenPaw (stub)
 
 zones:
   main:

@@ -3,6 +3,14 @@ parameters:
     app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
     app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
     app.ui_menu_config: '%kernel.project_dir%/resources/cms/ui/menu.yaml'
+    app.public_base_domain: '%env(default:app_public_base_domain_default:PUBLIC_BASE_DOMAIN)%'
+    app_public_base_domain_default: 'localhost'
+    app.public_http_port: '%env(default:app_public_http_port_default:PUBLIC_HTTP_PORT)%'
+    app_public_http_port_default: '8080'
+    app.public_https_port: '%env(default:app_public_https_port_default:PUBLIC_HTTPS_PORT)%'
+    app_public_https_port_default: '8443'
+    app.public_preferred_scheme: '%env(default:app_public_preferred_scheme_default:PUBLIC_PREFERRED_SCHEME)%'
+    app_public_preferred_scheme_default: 'http'
 
 services:
     _defaults:
@@ -19,6 +27,10 @@ services:
     App\Service\UiMenuService:
         arguments:
             $uiMenuConfigPath: '%app.ui_menu_config%'
+            $publicBaseDomain: '%app.public_base_domain%'
+            $publicHttpPort: '%app.public_http_port%'
+            $publicHttpsPort: '%app.public_https_port%'
+            $publicPreferredScheme: '%app.public_preferred_scheme%'
 
     App\Service\StarterEnvironmentService:
         arguments:

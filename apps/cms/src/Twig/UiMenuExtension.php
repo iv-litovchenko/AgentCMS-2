@@ -25,6 +25,8 @@ class UiMenuExtension extends AbstractExtension implements GlobalsInterface
             'ui_menu_main' => $this->uiMenuService->getZoneItems('main'),
             'ui_menu_apps' => $this->uiMenuService->getAppItems(),
             'ui_menu_apps_active' => $this->uiMenuService->hasActiveApp(),
+            'ui_menu_services' => $this->uiMenuService->getServiceItems(),
+            'ui_menu_services_active' => $this->uiMenuService->hasActiveService(),
             'ui_menu_profile_dropdown' => $this->uiMenuService->getZoneItems('profile_dropdown'),
         ];
     }

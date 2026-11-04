@@ -14,14 +14,33 @@ class UiMenuService
 
     private RequestStack $requestStack;
 
+    private string $publicBaseDomain;
+
+    private string $publicHttpPort;
+
+    private string $publicHttpsPort;
+
+    private string $publicPreferredScheme;
+
     /** @var array<string, mixed>|null */
     private ?array $configCache = null;
 
-    public function __construct(string $uiMenuConfigPath, UrlGeneratorInterface $urlGenerator, RequestStack $requestStack)
-    {
+    public function __construct(
+        string $uiMenuConfigPath,
+        UrlGeneratorInterface $urlGenerator,
+        RequestStack $requestStack,
+        string $publicBaseDomain,
+        string $publicHttpPort,
+        string $publicHttpsPort,
+        string $publicPreferredScheme
+    ) {
         $this->configPath = $uiMenuConfigPath;
         $this->urlGenerator = $urlGenerator;
         $this->requestStack = $requestStack;
+        $this->publicBaseDomain = $publicBaseDomain;
+        $this->publicHttpPort = $publicHttpPort;
+        $this->publicHttpsPort = $publicHttpsPort;
+        $this->publicPreferredScheme = $publicPreferredScheme;
     }
 
     /**
@@ -124,7 +143,35 @@ class UiMenuService
             }
 
             $name = $rawItem['name'] ?? '';
-            if (!is_string($name) || !$this->isValidAppName($name)) {
+            if (!is_string($name)) {
+                $name = '';
+            }
+
+            $customRoute = $rawItem['route'] ?? '';
+            if (!is_string($customRoute)) {
+                $customRoute = '';
+            }
+
+            if ($customRoute !== '') {
+                $routeParams = $rawItem['route_params'] ?? [];
+                if (!is_array($routeParams)) {
+                    $routeParams = [];
+                }
+                $url = $this->urlGenerator->generate($customRoute, $routeParams);
+                $active = $this->isAppMenuItemActive($rawItem, $currentRoute, $currentAppName, $this->getCurrentAppSection());
+                if ($name === '') {
+                    $name = 'menu-' . (string) count($items);
+                }
+                $items[] = [
+                    'label' => $label,
+                    'name' => $name,
+                    'url' => $url,
+                    'active' => $active,
+                ];
+                continue;
+            }
+
+            if (!$this->isValidAppName($name)) {
                 continue;
             }
 
@@ -153,6 +200,42 @@ class UiMenuService
         }
 
         return $items;
+    }
+
+    /**
+     * @param array<string, mixed> $rawItem
+     */
+    private function isAppMenuItemActive(array $rawItem, string $currentRoute, string $currentAppName, string $currentSection): bool
+    {
+        $activeOn = $rawItem['active_on'] ?? null;
+        if (!is_array($activeOn)) {
+            return false;
+        }
+
+        $expectedRoute = $activeOn['route'] ?? '';
+        if (!is_string($expectedRoute) || $expectedRoute === '') {
+            return false;
+        }
+
+        if ($currentRoute !== $expectedRoute) {
+            return false;
+        }
+
+        $expectedName = $activeOn['name'] ?? '';
+        if (is_string($expectedName) && $expectedName !== '') {
+            if ($currentAppName !== $expectedName) {
+                return false;
+            }
+        }
+
+        $expectedSection = $activeOn['section'] ?? '';
+        if (is_string($expectedSection) && $expectedSection !== '') {
+            if ($currentSection !== $expectedSection) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -282,6 +365,118 @@ class UiMenuService
         }
 
         return false;
+    }
+
+    /**
+     * @return list<array{label: string, subdomain: string, url: string, host: string, description: string, active: bool}>
+     */
+    public function getServiceItems(): array
+    {
+        $config = $this->loadConfig();
+        $services = $config['services'] ?? [];
+        if (!is_array($services)) {
+            return [];
+        }
+
+        $rawItems = $services['items'] ?? [];
+        if (!is_array($rawItems)) {
+            return [];
+        }
+
+        $requestHost = $this->getCurrentRequestHost();
+        $items = [];
+        foreach ($rawItems as $rawItem) {
+            if (!is_array($rawItem)) {
+                continue;
+            }
+
+            $label = $rawItem['label'] ?? '';
+            if (!is_string($label)) {
+                $label = '';
+            }
+
+            $subdomain = $rawItem['subdomain'] ?? '';
+            if (!is_string($subdomain) || !$this->isValidSubdomain($subdomain)) {
+                continue;
+            }
+
+            $description = $rawItem['description'] ?? '';
+            if (!is_string($description)) {
+                $description = '';
+            }
+
+            $host = $subdomain . '.' . $this->publicBaseDomain;
+            $url = $this->buildServicePublicUrl($subdomain);
+
+            $active = false;
+            if ($requestHost === $host) {
+                $active = true;
+            }
+
+            $items[] = [
+                'label' => $label,
+                'subdomain' => $subdomain,
+                'url' => $url,
+                'host' => $host,
+                'description' => $description,
+                'active' => $active,
+            ];
+        }
+
+        return $items;
+    }
+
+    public function hasActiveService(): bool
+    {
+        foreach ($this->getServiceItems() as $item) {
+            if ($item['active']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function buildServicePublicUrl(string $subdomain): string
+    {
+        $host = $subdomain . '.' . $this->publicBaseDomain;
+        $scheme = $this->publicPreferredScheme;
+        if ($scheme !== 'http' && $scheme !== 'https') {
+            $scheme = 'http';
+        }
+
+        $portSuffix = '';
+        if ($scheme === 'http') {
+            if ($this->publicHttpPort !== '' && $this->publicHttpPort !== '80') {
+                $portSuffix = ':' . $this->publicHttpPort;
+            }
+        } else {
+            if ($this->publicHttpsPort !== '' && $this->publicHttpsPort !== '443') {
+                $portSuffix = ':' . $this->publicHttpsPort;
+            }
+        }
+
+        return $scheme . '://' . $host . $portSuffix . '/';
+    }
+
+    private function getCurrentRequestHost(): string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request === null) {
+            return '';
+        }
+
+        $host = $request->getHost();
+        if (!is_string($host)) {
+            return '';
+        }
+
+        return strtolower($host);
+    }
+
+    private function isValidSubdomain(string $subdomain): bool
+    {
+        return (bool) preg_match('/^[a-z0-9-]+$/', $subdomain);
     }
 
     /**
