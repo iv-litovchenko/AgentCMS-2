@@ -38,7 +38,8 @@ class ConnectorService
      *     scheme: string,
      *     cms_url: string,
      *     mcp_url: string,
-     *     mcp_json_example: string
+     *     mcp_json_example: string,
+     *     mcp_auth_configured: bool
      * }
      */
     public function buildCurrentConnection(): array
@@ -60,11 +61,14 @@ class ConnectorService
         $baseUrl = $scheme . '://' . $host . $portSuffix;
         $mcpUrl = rtrim($baseUrl, '/') . '/' . ltrim($mcpPath, '/');
 
+        $authToken = $this->getMcpAuthTokenValue();
+
         return [
             'scheme' => $scheme,
             'cms_url' => rtrim($baseUrl, '/') . '/',
             'mcp_url' => $mcpUrl,
-            'mcp_json_example' => $this->buildMcpJsonExample($mcpUrl),
+            'mcp_json_example' => $this->buildMcpJsonExample($mcpUrl, $authToken),
+            'mcp_auth_configured' => $authToken !== '',
         ];
     }
 
@@ -169,13 +173,20 @@ class ConnectorService
         return 'var/connector/tokens.yaml';
     }
 
-    private function buildMcpJsonExample(string $mcpUrl): string
+    private function buildMcpJsonExample(string $mcpUrl, string $authToken): string
     {
+        $authorization = $this->formatMcpAuthorizationHeaderValue($authToken);
+
+        $server = [
+            'url' => $mcpUrl,
+            'headers' => [
+                'Authorization' => $authorization,
+            ],
+        ];
+
         $payload = [
             'mcpServers' => [
-                'agent-cms-light' => [
-                    'url' => $mcpUrl,
-                ],
+                'agent-cms-light' => $server,
             ],
         ];
 
@@ -185,6 +196,43 @@ class ConnectorService
         }
 
         return $encoded;
+    }
+
+    private function getMcpAuthTokenValue(): string
+    {
+        $tokenId = $this->resolveMcpAuthTokenId();
+        $stored = $this->loadTokenValues();
+        $values = $stored['values'] ?? [];
+        if (!is_array($values)) {
+            $values = [];
+        }
+
+        $token = '';
+        if (array_key_exists($tokenId, $values) && is_string($values[$tokenId])) {
+            $token = trim($values[$tokenId]);
+        }
+
+        return $token;
+    }
+
+    private function formatMcpAuthorizationHeaderValue(string $token): string
+    {
+        if ($token === '') {
+            return 'Bearer <не задан>';
+        }
+
+        return 'Bearer ' . $token;
+    }
+
+    private function resolveMcpAuthTokenId(): string
+    {
+        $registry = $this->loadRegistry();
+        $tokenId = $registry['mcp_auth_token_id'] ?? 'cursor_mcp';
+        if (!is_string($tokenId) || !$this->isValidId($tokenId)) {
+            return 'cursor_mcp';
+        }
+
+        return $tokenId;
     }
 
     private function portSuffixForScheme(string $scheme): string

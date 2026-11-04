@@ -1,6 +1,8 @@
 # MCP-токены. URL подключения — PUBLIC_* (Стартер). Значения токенов — var/connector/tokens.yaml
 
 mcp_path: /mcp/
+# id токена для заголовка Authorization в примере mcp.json (Cursor)
+mcp_auth_token_id: cursor_mcp
 
 tokens:
   items:
