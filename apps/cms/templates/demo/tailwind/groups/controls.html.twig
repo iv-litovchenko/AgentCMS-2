@@ -1,0 +1,43 @@
+<div class="space-y-6">
+    <div id="tw-buttons" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Кнопки</p>
+        <div class="space-y-4 rounded-md border border-zinc-100 bg-zinc-50 p-4">
+            <div class="flex flex-wrap gap-2">
+                <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Primary</button>
+                <button type="button" class="rounded-lg bg-zinc-800 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-900">Secondary</button>
+                <button type="button" class="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-800 hover:bg-zinc-50">Outline</button>
+                <button type="button" class="rounded-lg px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100">Ghost</button>
+                <button type="button" disabled class="cursor-not-allowed rounded-lg bg-zinc-200 px-4 py-2 text-sm text-zinc-500">Disabled</button>
+            </div>
+            <div class="inline-flex rounded-lg shadow-sm" role="group">
+                <button type="button" class="rounded-s-lg border border-zinc-300 bg-white px-4 py-2 text-sm hover:bg-zinc-50">Left</button>
+                <button type="button" class="border-y border-zinc-300 bg-white px-4 py-2 text-sm hover:bg-zinc-50">Middle</button>
+                <button type="button" class="rounded-e-lg border border-zinc-300 bg-white px-4 py-2 text-sm hover:bg-zinc-50">Right</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tw-fields" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Поля (Tailwind)</p>
+        <div class="grid gap-4 rounded-md border border-zinc-100 bg-zinc-50 p-4 lg:grid-cols-2">
+            <label class="block text-sm"><span class="mb-1 block font-medium">Text</span><input type="text" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="Name"></label>
+            <label class="block text-sm"><span class="mb-1 block font-medium">Select</span><select class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm"><option>One</option><option>Two</option></select></label>
+            <label class="block text-sm lg:col-span-2"><span class="mb-1 block font-medium">Textarea</span><textarea rows="2" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm"></textarea></label>
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="rounded border-zinc-300 text-blue-600"> Checkbox</label>
+            <div class="text-sm"><span class="mb-1 block font-medium">Toggle</span>
+                <label class="inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only">
+                    <span class="relative h-6 w-11 rounded-full bg-zinc-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-zinc-300 after:bg-white after:transition-all peer-checked:bg-blue-600 peer-checked:after:translate-x-full"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div id="tw-badges" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Бейджи</p>
+        <div class="flex flex-wrap gap-2 rounded-md border border-zinc-100 bg-zinc-50 p-4">
+            <span class="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">Blue</span>
+            <span class="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-700">Pill</span>
+        </div>
+    </div>
+</div>

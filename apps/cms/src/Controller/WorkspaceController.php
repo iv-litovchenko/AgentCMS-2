@@ -24,14 +24,8 @@ class WorkspaceController extends AbstractController
     #[Route('', name: 'workspace_index', methods: ['GET'])]
     public function index(): Response
     {
-        $workspaces = [];
-        foreach ($this->workspaceService->list() as $workspace) {
-            $workspace['initials'] = $this->workspaceService->initialsFromName($workspace['name']);
-            $workspaces[] = $workspace;
-        }
-
         return $this->render('workspace/index.html.twig', [
-            'workspaces' => $workspaces,
+            'storages' => $this->workspaceService->listForDisplay(),
         ]);
     }
 

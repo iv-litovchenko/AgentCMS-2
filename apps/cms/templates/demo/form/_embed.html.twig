@@ -9,8 +9,10 @@
 <section class="rounded-lg border border-zinc-200 bg-white {{ is_compact ? 'p-3' : 'p-5' }} shadow-sm">
     {% if show_heading %}
         <h2 class="{{ is_compact ? 'text-lg' : 'text-xl' }} font-semibold tracking-tight text-zinc-900">Symfony Form + Flowbite</h2>
+        {% set typo_route = typography_route_name|default('app_show') %}
+        {% set typo_params = typography_route_params|default({name: 'typography'}) %}
         <p class="mt-0.5 {{ is_compact ? 'text-xs' : 'text-sm' }} text-zinc-600">
-            Демо формы{% if is_compact %} · <a href="{{ path('app_section', {name: 'documentation', section: 'typography'}) }}" class="text-blue-600 hover:underline">обычный</a>{% else %} · <a href="{{ path('app_section', {name: 'documentation', section: 'typography', compact: 1}) }}#demo-form" class="text-blue-600 hover:underline">compact</a>{% endif %}
+            Демо формы{% if is_compact %} · <a href="{{ path(typo_route, typo_params) }}" class="text-blue-600 hover:underline">обычный</a>{% else %} · <a href="{{ path(typo_route, typo_params|merge({compact: 1})) }}#demo-form" class="text-blue-600 hover:underline">compact</a>{% endif %}
         </p>
     {% endif %}
 
@@ -20,7 +22,8 @@
         </div>
     {% endfor %}
 
-    {% set form_action_params = {name: 'documentation', section: 'typography'} %}
+    {% set typo_route = typography_route_name|default('app_show') %}
+    {% set form_action_params = typography_route_params|default({name: 'typography'}) %}
     {% if is_compact %}
         {% set form_action_params = form_action_params|merge({compact: 1}) %}
     {% endif %}
@@ -28,7 +31,7 @@
     {% if not show_heading %}
         {% set form_top = is_compact ? 'mt-0' : 'mt-0' %}
     {% endif %}
-    {{ form_start(form, {action: path('app_section', form_action_params) ~ '#demo-form', attr: {class: form_top, novalidate: 'novalidate'}}) }}
+    {{ form_start(form, {action: path(typo_route, form_action_params) ~ '#demo-form', attr: {class: form_top, novalidate: 'novalidate'}}) }}
 
     {{ form_row(form.title) }}
     {{ form_row(form.description) }}

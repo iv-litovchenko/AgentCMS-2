@@ -23,7 +23,7 @@ class TypographyController extends AbstractController
     public function index(Request $request): Response
     {
         if ($request->isMethod('GET')) {
-            return $this->redirectToDocumentationTypography($request);
+            return $this->redirectToTypography($request);
         }
 
         return $this->renderPage($request);
@@ -33,7 +33,7 @@ class TypographyController extends AbstractController
     public function legacyDemoForm(Request $request): Response
     {
         if ($request->isMethod('GET')) {
-            return $this->redirectToDocumentationTypographyFragment($request, 'demo-form');
+            return $this->redirectToTypographyFragment($request, 'demo-form');
         }
 
         return $this->renderPage($request);
@@ -42,13 +42,13 @@ class TypographyController extends AbstractController
     #[Route('/tailwind-demo', name: 'tailwind_demo', methods: ['GET'])]
     public function legacyTailwindDemo(Request $request): Response
     {
-        return $this->redirectToDocumentationTypographyFragment($request, 'tailwind');
+        return $this->redirectToTypographyFragment($request, 'tailwind');
     }
 
     #[Route('/flowbite-demo', name: 'flowbite_demo', methods: ['GET'])]
     public function legacyFlowbiteDemo(Request $request): Response
     {
-        return $this->redirectToDocumentationTypographyFragment($request, 'flowbite');
+        return $this->redirectToTypographyFragment($request, 'flowbite');
     }
 
     public function renderPage(Request $request): Response
@@ -57,6 +57,8 @@ class TypographyController extends AbstractController
         $data = new DemoFormData();
         $form = $this->createForm(DemoFormType::class, $data);
         $form->handleRequest($request);
+
+        $routeContext = $this->resolveRouteContext($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var DemoFormData $submitted */
@@ -84,49 +86,87 @@ class TypographyController extends AbstractController
 
             $this->addFlash('success', $message);
 
-            $redirectParams = [
-                'name' => 'documentation',
-                'section' => 'typography',
-            ];
+            $redirectParams = $routeContext['route_params'];
             if ($compact) {
                 $redirectParams['compact'] = 1;
             }
 
-            return $this->redirectToRoute('app_section', $redirectParams + ['_fragment' => 'demo-form']);
+            return $this->redirectToRoute($routeContext['route_name'], $redirectParams + ['_fragment' => 'demo-form']);
         }
 
-        return $this->render('typography/index.html.twig', [
+        $view = [
             'form' => $form->createView(),
             'compact' => $compact,
-            'doc_app' => $this->uiMenuService->findAppByName('documentation'),
-            'doc_sections' => $this->uiMenuService->getAppSections('documentation'),
-            'section' => $this->uiMenuService->findAppSection('documentation', 'typography'),
-        ]);
+            'typography_route_name' => $routeContext['route_name'],
+            'typography_route_params' => $routeContext['route_params'],
+        ];
+
+        if ($routeContext['standalone']) {
+            $app = $this->uiMenuService->findAppByName('typography');
+            if ($app === null) {
+                throw $this->createNotFoundException('Приложение не найдено.');
+            }
+            $view['cms_app'] = $app;
+            $view['hide_apps_nav'] = true;
+            $template = 'typography/shell_app.html.twig';
+        } else {
+            $view['doc_app'] = $this->uiMenuService->findAppByName('documentation');
+            $view['doc_sections'] = $this->uiMenuService->getAppSections('documentation');
+            $view['section'] = $this->uiMenuService->findAppSection('documentation', 'typography');
+            $template = 'typography/shell_doc.html.twig';
+        }
+
+        return $this->render($template, $view);
     }
 
-    private function redirectToDocumentationTypography(Request $request): Response
+    /**
+     * @return array{standalone: bool, route_name: string, route_params: array<string, string|int>}
+     */
+    private function resolveRouteContext(Request $request): array
     {
-        $params = [
-            'name' => 'documentation',
-            'section' => 'typography',
+        $route = $request->attributes->get('_route');
+        if (!is_string($route)) {
+            $route = '';
+        }
+
+        if ($route === 'app_show') {
+            $name = $request->attributes->get('name');
+            if ($name === 'typography') {
+                return [
+                    'standalone' => true,
+                    'route_name' => 'app_show',
+                    'route_params' => ['name' => 'typography'],
+                ];
+            }
+        }
+
+        return [
+            'standalone' => false,
+            'route_name' => 'app_section',
+            'route_params' => [
+                'name' => 'documentation',
+                'section' => 'typography',
+            ],
         ];
+    }
+
+    private function redirectToTypography(Request $request): Response
+    {
+        $params = ['name' => 'typography'];
         if ($request->query->getBoolean('compact')) {
             $params['compact'] = 1;
         }
 
-        return $this->redirectToRoute('app_section', $params, Response::HTTP_MOVED_PERMANENTLY);
+        return $this->redirectToRoute('app_show', $params, Response::HTTP_MOVED_PERMANENTLY);
     }
 
-    private function redirectToDocumentationTypographyFragment(Request $request, string $fragment): Response
+    private function redirectToTypographyFragment(Request $request, string $fragment): Response
     {
-        $params = [
-            'name' => 'documentation',
-            'section' => 'typography',
-        ];
+        $params = ['name' => 'typography'];
         if ($request->query->getBoolean('compact')) {
             $params['compact'] = 1;
         }
 
-        return $this->redirectToRoute('app_section', $params + ['_fragment' => $fragment]);
+        return $this->redirectToRoute('app_show', $params + ['_fragment' => $fragment]);
     }
 }

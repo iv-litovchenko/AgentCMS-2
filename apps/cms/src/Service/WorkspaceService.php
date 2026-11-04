@@ -51,6 +51,28 @@ class WorkspaceService
     }
 
     /**
+     * @return list<array{id: string, slug: string, name: string, description: string, path: string, initials: string, location: string, avatar: string}>
+     */
+    public function listForDisplay(): array
+    {
+        $storages = [];
+        foreach ($this->list() as $workspace) {
+            $storages[] = [
+                'id' => $workspace['id'],
+                'slug' => $workspace['slug'],
+                'name' => $workspace['name'],
+                'description' => $workspace['description'],
+                'path' => $workspace['folder'],
+                'initials' => $this->initialsFromName($workspace['name']),
+                'location' => $workspace['location'],
+                'avatar' => $workspace['avatar'],
+            ];
+        }
+
+        return $storages;
+    }
+
+    /**
      * @return array{id: string, name: string, folder: string, location: string, description: string, avatar: string, sort_order: int, created_at: string, updated_at: string}|null
      */
     public function findById(string $id): ?array

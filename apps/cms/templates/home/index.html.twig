@@ -9,72 +9,15 @@
         <p class="mx-auto max-w-6xl px-4 pt-3 text-xs text-zinc-500 sm:px-6">Компактный режим · <a href="{{ path('home') }}" class="text-blue-600 hover:underline">обычный вид</a></p>
     {% endif %}
 
-    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col {{ is_compact ? 'gap-2 px-3 py-3 sm:px-4' : 'gap-4 px-4 py-6 sm:px-6' }} lg:flex-row lg:items-start">
-        {# Боковая панель — заготовка #}
-        <aside class="w-full shrink-0 {{ is_compact ? 'lg:w-44' : 'lg:w-52' }}" aria-label="Панель">
-            <div class="rounded-lg border border-zinc-200 bg-white {{ is_compact ? 'p-2' : 'p-3' }} shadow-sm">
-                <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Панель</p>
-                <ul class="space-y-0.5 {{ is_compact ? 'text-xs' : 'text-sm' }}">
-                    <li>
-                        <span class="flex items-center gap-2 rounded-md bg-zinc-100 {{ is_compact ? 'px-2 py-1.5' : 'px-2.5 py-2' }} font-medium text-zinc-900">
-                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                            Обзор
-                        </span>
-                    </li>
-                    <li>
-                        <span class="flex items-center gap-2 rounded-md px-2.5 py-2 text-zinc-400">Записи</span>
-                    </li>
-                    <li>
-                        <span class="flex items-center gap-2 rounded-md px-2.5 py-2 text-zinc-400">Поиск</span>
-                    </li>
-                    <li>
-                        <span class="flex items-center gap-2 rounded-md px-2.5 py-2 text-zinc-400">Журнал</span>
-                    </li>
-                </ul>
-            </div>
-        </aside>
+    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col {{ is_compact ? 'gap-2 px-3 py-3 sm:px-4' : 'gap-4 px-4 py-6 sm:px-6' }}">
+        {% if demo_block is not null %}
+            {% include '@DemoBlock/block.html.twig' %}
+        {% endif %}
 
-        <div class="flex min-w-0 flex-1 flex-col {{ is_compact ? 'gap-2' : 'gap-4' }}">
-            {% if demo_block is not null %}
-                {% include '@DemoBlock/block.html.twig' %}
-            {% endif %}
+        {% include 'workspace/_storages_section.html.twig' with {storages: storages, is_compact: is_compact} %}
 
-            {# Список хранилищ — заготовка #}
-            <section class="rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="storages-heading">
-                <div class="flex items-center justify-between border-b border-zinc-100 {{ is_compact ? 'px-3 py-2' : 'px-4 py-3' }}">
-                    <h2 id="storages-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">Хранилища</h2>
-                    <a href="{{ path('workspace_new') }}"
-                       class="rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-50">
-                        + Создать
-                    </a>
-                </div>
-                <ul class="divide-y divide-zinc-100">
-                    {% for storage in storages %}
-                        <li class="flex flex-col gap-2 {{ is_compact ? 'px-3 py-2' : 'gap-3 px-4 py-3' }} sm:flex-row sm:items-center sm:justify-between hover:bg-zinc-50">
-                            <a href="{{ path('workspace_show', {slug: storage.slug}) }}"
-                               class="flex min-w-0 flex-1 items-center gap-2 {{ is_compact ? 'text-xs' : 'gap-3 text-sm' }} text-inherit">
-                                {% include 'workspace/_avatar.html.twig' with {
-                                    avatar: storage.avatar,
-                                    initials: storage.initials,
-                                    size: is_compact ? 'h-7 w-7' : 'h-9 w-9'
-                                } %}
-                                <div class="min-w-0 flex-1">
-                                    <p class="truncate font-medium text-zinc-900 hover:text-blue-600 hover:underline">{{ storage.name }}</p>
-                                    <p class="truncate text-xs text-zinc-500">{{ storage.path }}</p>
-                                </div>
-                                <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {% if storage.location == 'server' %}bg-blue-50 text-blue-700{% else %}bg-emerald-50 text-emerald-700{% endif %}">
-                                    {% if storage.location == 'server' %}сервер{% else %}локально{% endif %}
-                                </span>
-                            </a>
-                            <div class="pl-9 sm:pl-0">
-                                {% include 'workspace/_list_actions.html.twig' with {id: storage.id, name: storage.name} %}
-                            </div>
-                        </li>
-                    {% else %}
-                        <li class="px-4 py-6 text-center text-sm text-zinc-500">Пока нет хранилищ</li>
-                    {% endfor %}
-                </ul>
-            </section>
-        </div>
+        {% include 'home/_records_grid_stub.html.twig' with {is_compact: is_compact} %}
+        {% include 'home/_in_focus_stub.html.twig' with {is_compact: is_compact} %}
+        {% include 'home/_activity_feed_stub.html.twig' with {is_compact: is_compact} %}
     </div>
 {% endblock %}

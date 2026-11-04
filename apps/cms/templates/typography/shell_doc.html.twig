@@ -1,0 +1,20 @@
+{% extends 'app/documentation/layout.html.twig' %}
+
+{% set is_compact = compact|default(false) %}
+{% set page_title = section.label|default('Типография') %}
+
+{% block title %}{{ page_title }} — Документация{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'typography/_assets.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'typography/_scripts.html.twig' %}
+{% endblock %}
+
+{% block doc_content %}
+    {% include 'typography/_content.html.twig' %}
+{% endblock %}

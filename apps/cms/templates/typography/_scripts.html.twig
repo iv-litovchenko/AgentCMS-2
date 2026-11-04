@@ -1,0 +1,27 @@
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById('demo-modal');
+        var openBtn = document.getElementById('open-demo-modal');
+        var closeBtn = document.getElementById('close-demo-modal');
+        var backdrop = document.getElementById('demo-modal-backdrop');
+        if (!modal || !openBtn) {
+            return;
+        }
+        function openModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        openBtn.addEventListener('click', openModal);
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        }
+        if (backdrop) {
+            backdrop.addEventListener('click', closeModal);
+        }
+    });
+</script>

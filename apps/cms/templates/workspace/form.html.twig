@@ -4,10 +4,6 @@
 
 {% block main %}
     <main class="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
-        <div class="mb-4">
-            <a href="{{ path('workspace_index') }}" class="text-sm text-blue-600 hover:underline">← К списку</a>
-        </div>
-
         <section class="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
             <h1 class="text-xl font-semibold tracking-tight text-zinc-900">{{ page_title }}</h1>
 
@@ -60,8 +56,12 @@
                 {{ form_errors(form.avatarUpload) }}
             </div>
 
-            <div class="pt-2">
+            <div class="flex flex-wrap items-center gap-2 pt-2">
                 {{ form_widget(form.save, {attr: {class: 'rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800'}}) }}
+                <a href="{{ path('workspace_index') }}"
+                   class="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50">
+                    Закрыть
+                </a>
             </div>
 
             {{ form_end(form) }}

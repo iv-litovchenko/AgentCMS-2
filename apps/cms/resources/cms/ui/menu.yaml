@@ -11,30 +11,31 @@ apps:
     - label: Документация
       name: documentation
       sections:
+        - label: README
+          slug: readme
         - label: Хорошие практики
           slug: practices
         - label: API
           slug: api
         - label: MCP
           slug: mcp
+        - label: SKILLS
+          slug: skills
     - label: Стартер
       name: starter
       hide_apps_nav: true
     - label: Чат
       name: chat
+      hide_apps_nav: true
     - label: Окна
       name: windows
+      hide_apps_nav: true
     - label: Командер
       name: commander
+      hide_apps_nav: true
     - label: Типография
-      route: app_section
-      route_params:
-        name: documentation
-        section: typography
-      active_on:
-        route: app_section
-        name: documentation
-        section: typography
+      name: typography
+      hide_apps_nav: true
 
 # Сервисы на поддоменах: {subdomain}.{PUBLIC_BASE_DOMAIN}
 services:
@@ -48,18 +49,7 @@ services:
 
 zones:
   main:
-    items:
-      - label: Главная
-        route: home
-        active_routes:
-          - home
-          - home_compact
-      - label: Хранилища
-        route: workspace_index
-        active_routes:
-          - workspace_index
-          - workspace_new
-          - workspace_edit
+    items: []
 
   profile_dropdown:
     items:

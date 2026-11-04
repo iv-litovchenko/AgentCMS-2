@@ -1,0 +1,40 @@
+<div class="space-y-6">
+    <div id="tw-nav" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Навигация</p>
+        <div class="space-y-3 rounded-md border border-zinc-100 bg-zinc-50 p-4">
+            <div class="border-b border-zinc-200"><nav class="flex gap-4 text-sm"><a href="#" class="border-b-2 border-blue-600 pb-2 font-medium text-blue-600">Tab active</a><a href="#" class="pb-2 text-zinc-500">Tab</a></nav></div>
+            <nav class="text-sm text-zinc-500"><a href="#" class="hover:text-blue-600">Home</a> / <span class="text-zinc-800">CMS</span></nav>
+        </div>
+    </div>
+
+    <div id="tw-modal" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Модальное окно</p>
+        <button type="button" id="open-demo-modal" class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700">Open modal</button>
+        <div id="demo-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true">
+            <div id="demo-modal-backdrop" class="absolute inset-0 bg-zinc-900/50"></div>
+            <div class="relative z-10 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+                <h4 class="text-lg font-semibold">Modal title</h4>
+                <p class="mt-2 text-sm text-zinc-600">Minimal inline JS + backdrop.</p>
+                <div class="mt-4 flex justify-end gap-2">
+                    <button type="button" id="close-demo-modal" class="rounded-lg border border-zinc-300 px-4 py-2 text-sm">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tw-accordion" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Аккордеон и прогресс</p>
+        <div class="divide-y divide-zinc-200 rounded-lg border border-zinc-200 bg-white shadow-sm">
+            <details class="p-3" open><summary class="cursor-pointer text-sm font-medium">Section one</summary><p class="mt-2 text-sm text-zinc-600">Content.</p></details>
+            <details class="p-3"><summary class="cursor-pointer text-sm font-medium">Section two</summary><p class="mt-2 text-sm text-zinc-600">YAML-first.</p></details>
+        </div>
+        <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-zinc-200"><div class="h-2 w-2/3 rounded-full bg-blue-600"></div></div>
+    </div>
+
+    <div id="tw-grid" class="scroll-mt-24">
+        <p class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Сетка</p>
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {% for i in 1..4 %}<div class="rounded bg-blue-100 p-3 text-center text-sm text-blue-900">col {{ i }}</div>{% endfor %}
+        </div>
+    </div>
+</div>

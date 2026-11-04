@@ -1,0 +1,29 @@
+{% set is_compact = is_compact|default(false) %}
+{% set focus_items = focus_items|default([
+    {initials: 'OW', title: 'Демо-форма API', storage: 'Основной workspace'},
+    {initials: 'ПЕ', title: 'Черновик заметки', storage: 'Песочница'},
+    {initials: 'А2', title: 'Архив 2025 · индекс', storage: 'Архив 2025'},
+]) %}
+<section class="w-full rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="in-focus-heading">
+    <div class="border-b border-zinc-100 {{ is_compact ? 'px-3 py-2' : 'px-4 py-3' }}">
+        <h2 id="in-focus-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">В фокусе</h2>
+        <p class="mt-0.5 text-xs text-zinc-500">Быстрая навигация — над чем работаете сейчас.</p>
+    </div>
+    <ul class="divide-y divide-zinc-100">
+        {% for item in focus_items %}
+            <li>
+                <a href="#"
+                   class="flex items-center gap-3 px-4 py-3 text-sm hover:bg-zinc-50 {{ is_compact ? 'px-3 py-2' : '' }}">
+                    <span class="{{ is_compact ? 'h-8 w-8' : 'h-9 w-9' }} flex shrink-0 items-center justify-center rounded-md bg-zinc-100 text-xs font-medium text-zinc-600">
+                        {{ item.initials }}
+                    </span>
+                    <span class="min-w-0 flex-1">
+                        <span class="block truncate font-medium text-zinc-900">{{ item.title }}</span>
+                        <span class="block truncate text-xs text-zinc-500">{{ item.storage }}</span>
+                    </span>
+                    <span class="shrink-0 text-xs text-zinc-400">→</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</section>

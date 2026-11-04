@@ -50,28 +50,7 @@ class HomeController extends AbstractController
             'compact' => $compact,
             'title' => 'Agent CMS Light',
             'demo_block' => $demoBlock,
-            'storages' => $this->buildStoragesForView(),
+            'storages' => $this->workspaceService->listForDisplay(),
         ]);
-    }
-
-    /**
-     * @return list<array{id: string, slug: string, name: string, path: string, initials: string, location: string, avatar: string}>
-     */
-    private function buildStoragesForView(): array
-    {
-        $storages = [];
-        foreach ($this->workspaceService->list() as $workspace) {
-            $storages[] = [
-                'id' => $workspace['id'],
-                'slug' => $workspace['slug'],
-                'name' => $workspace['name'],
-                'path' => $workspace['folder'],
-                'initials' => $this->workspaceService->initialsFromName($workspace['name']),
-                'location' => $workspace['location'],
-                'avatar' => $workspace['avatar'],
-            ];
-        }
-
-        return $storages;
     }
 }

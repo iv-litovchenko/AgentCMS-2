@@ -18,7 +18,8 @@ WORKDIR /var/www/cms
 COPY --from=vendor /app/vendor ./vendor
 COPY apps/cms/ .
 COPY shared/php /var/www/shared/php
-RUN mkdir -p var/cache var/log && chown -R www-data:www-data var
+RUN mkdir -p var/cache var/log var/starter && chown -R www-data:www-data var \
+    && echo "error_log=/var/www/cms/var/log/php.log" > /usr/local/etc/php/conf.d/cms-error-log.ini
 
 USER www-data
 EXPOSE 9000

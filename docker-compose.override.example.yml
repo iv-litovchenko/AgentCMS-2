@@ -19,10 +19,12 @@ services:
       APP_ENV: dev
       APP_DEBUG: "1"
       APP_HOST_PLATFORM: mac
+      PROJECT_README_PATH: /var/www/README.md
     volumes:
       - ./apps/cms:/var/www/cms
       - ./shared/php:/var/www/shared/php
       - ./packages:/var/www/packages
+      - ./README.md:/var/www/README.md:ro
       - cms_vendor:/var/www/cms/vendor
 
 volumes:

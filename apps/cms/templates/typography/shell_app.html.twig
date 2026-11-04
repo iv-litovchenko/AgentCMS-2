@@ -1,0 +1,24 @@
+{% extends 'app/layout.html.twig' %}
+
+{% set is_compact = compact|default(false) %}
+{% set page_title = cms_app.label|default('Типография') %}
+
+{% block title %}{{ page_title }} — Agent CMS Light{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'typography/_assets.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'typography/_scripts.html.twig' %}
+{% endblock %}
+
+{% block app_content %}
+    {% include 'app/_page_plashka.html.twig' with {
+        plashka_label: cms_app.label,
+        plashka_aria_label: cms_app.label,
+    } %}
+    {% include 'typography/_content.html.twig' %}
+{% endblock %}

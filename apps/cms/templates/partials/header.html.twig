@@ -6,18 +6,26 @@
         </a>
 
         <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
-            <nav class="flex flex-wrap items-center gap-1 text-sm text-zinc-600" aria-label="Основное">
-                {% for item in ui_menu_main %}
-                    {% if item.type == 'link' and not item.disabled %}
-                        <a href="{{ item.url }}"
-                           class="rounded-md px-2.5 py-1.5 {% if item.active %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
-                            {{ item.label }}
-                        </a>
-                    {% endif %}
-                {% endfor %}
-            </nav>
+            {% set ui_menu_main_has_links = false %}
+            {% for item in ui_menu_main %}
+                {% if item.type == 'link' and not item.disabled %}
+                    {% set ui_menu_main_has_links = true %}
+                {% endif %}
+            {% endfor %}
+            {% if ui_menu_main_has_links %}
+                <nav class="flex flex-wrap items-center gap-1 text-sm text-zinc-600" aria-label="Основное">
+                    {% for item in ui_menu_main %}
+                        {% if item.type == 'link' and not item.disabled %}
+                            <a href="{{ item.url }}"
+                               class="rounded-md px-2.5 py-1.5 {% if item.active %}font-medium text-zinc-900 bg-zinc-100{% else %}text-zinc-600 hover:bg-zinc-50{% endif %}">
+                                {{ item.label }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </nav>
 
-            <div class="hidden h-5 w-px bg-zinc-200 sm:block" aria-hidden="true"></div>
+                <div class="hidden h-5 w-px bg-zinc-200 sm:block" aria-hidden="true"></div>
+            {% endif %}
 
             <details class="group/apps relative">
                 <summary class="flex cursor-pointer list-none items-center gap-1.5 rounded-md border border-transparent px-2 py-1.5 text-sm hover:bg-zinc-50 [&::-webkit-details-marker]:hidden {% if ui_menu_apps_active %}bg-zinc-100 font-medium text-zinc-900{% else %}text-zinc-600{% endif %}">
@@ -65,6 +73,8 @@
                     {% endfor %}
                 </div>
             </details>
+
+            <div class="hidden h-5 w-px bg-zinc-200 sm:block" aria-hidden="true"></div>
 
             <details class="group relative">
                 <summary class="flex cursor-pointer list-none items-center gap-2 rounded-md border border-transparent py-1 pl-1 pr-2 text-sm hover:bg-zinc-50 [&::-webkit-details-marker]:hidden">
