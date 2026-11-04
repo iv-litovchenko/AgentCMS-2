@@ -1,6 +1,6 @@
 <?php
 
-namespace AgentCmsLight\Pages\DemoBlock\DependencyInjection;
+namespace AgentCms\Pages\DemoBlock\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

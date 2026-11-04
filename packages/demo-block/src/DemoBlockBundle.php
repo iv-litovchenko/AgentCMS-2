@@ -1,8 +1,8 @@
 <?php
 
-namespace AgentCmsLight\Pages\DemoBlock;
+namespace AgentCms\Pages\DemoBlock;
 
-use AgentCmsLight\Pages\DemoBlock\DependencyInjection\DemoBlockExtension;
+use AgentCms\Pages\DemoBlock\DependencyInjection\DemoBlockExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class DemoBlockBundle extends Bundle

@@ -3,5 +3,5 @@ items:
   - id: demo_block
     label: Demo block
     description: Кубик на главной из packages/demo-block
-    composer_package: agent-cms-light/page-demo-block
+    composer_package: agent-cms/page-demo-block
     default_enabled: true

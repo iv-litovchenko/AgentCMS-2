@@ -4,13 +4,13 @@
 #
 # Монтируется:
 #   apps/cms      → /var/www/cms
-#   shared/php    → /var/www/shared/php  (autoload AgentCmsLight\Shared)
+#   shared/php    → /var/www/shared/php  (autoload AgentCms\Shared)
 #   packages      → /var/www/packages    (symlink vendor → ../../../packages/…)
 # vendor — именованный том (не затирается bind-mount'ом).
 #
 # Первый запуск / после смены composer.json (в образе vendor без --dev):
 #   docker run --rm -v "$PWD/apps/cms:/app" -v "$PWD/shared/php:/shared/php" \
-#     -v agent-cms-light_cms_vendor:/app/vendor -w /app composer:2 \
+#     -v agent-cms_cms_vendor:/app/vendor -w /app composer:2 \
 #     composer install --no-interaction
 
 services:

@@ -26,8 +26,8 @@
         {% for cell in record_cells %}
             {% set col = loop.index0 % grid_cols %}
             {% set row = (loop.index0 / grid_cols)|round(0, 'floor') %}
-            {% set is_light = ((row + col) % 2) == 0 %}
-            <div class="flex flex-col items-center justify-center gap-1.5 px-2 py-4 {{ is_light ? 'bg-zinc-50' : 'bg-white' }} {{ is_compact ? 'py-3' : 'py-5' }}">
+            {% set is_alt = ((row + col) % 2) == 0 %}
+            <div class="flex flex-col items-center justify-center gap-1.5 px-2 py-4 {{ is_alt ? 'bg-zinc-50' : 'bg-white' }} {{ is_compact ? 'py-3' : 'py-5' }}">
                 <span class="{{ is_compact ? 'h-8 w-8 text-[10px]' : 'h-9 w-9 text-xs' }} flex shrink-0 items-center justify-center rounded-md bg-zinc-100 font-medium text-zinc-600 ring-1 ring-zinc-200/80">
                     {{ cell.initials }}
                 </span>

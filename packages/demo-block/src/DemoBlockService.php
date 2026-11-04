@@ -1,6 +1,6 @@
 <?php
 
-namespace AgentCmsLight\Pages\DemoBlock;
+namespace AgentCms\Pages\DemoBlock;
 
 class DemoBlockService
 {
@@ -14,7 +14,7 @@ class DemoBlockService
             'items' => [
                 [
                     'label' => 'Пакет packages/demo-block',
-                    'detail' => 'agent-cms-light/page-demo-block через Composer',
+                    'detail' => 'agent-cms/page-demo-block через Composer',
                 ],
                 [
                     'label' => 'Twig partial',

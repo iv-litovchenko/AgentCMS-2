@@ -7,7 +7,7 @@
     "content-hash": "aa818b378cf2b1a1f5dcb437cc75a6b3",
     "packages": [
         {
-            "name": "agent-cms-light/page-demo-block",
+            "name": "agent-cms/page-demo-block",
             "version": "0.0.1",
             "dist": {
                 "type": "path",
@@ -25,18 +25,18 @@
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
-                    "bundle": "AgentCmsLight\\Pages\\DemoBlock\\DemoBlockBundle"
+                    "bundle": "AgentCms\\Pages\\DemoBlock\\DemoBlockBundle"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "AgentCmsLight\\Pages\\DemoBlock\\": "src/"
+                    "AgentCms\\Pages\\DemoBlock\\": "src/"
                 }
             },
             "license": [
                 "proprietary"
             ],
-            "description": "Demo page block (home cube) for Agent CMS Light",
+            "description": "Demo page block (home cube) for Agent CMS",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -4254,7 +4254,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "agent-cms-light/page-demo-block": 20
+        "agent-cms/page-demo-block": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

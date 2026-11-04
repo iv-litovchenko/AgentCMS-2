@@ -1,4 +1,4 @@
-# Agent CMS Light — общая заготовка (Mac / Linux / Windows + Docker Desktop)
+# Agent CMS — общая заготовка (Mac / Linux / Windows + Docker Desktop)
 # Запуск: docker compose up --build
 # Dev (код с диска): cp docker-compose.override.example.yml docker-compose.override.yml
 # CMS:     http://localhost:8080/
@@ -8,7 +8,7 @@
 # MCP stub: http://localhost:8080/mcp/
 # API stub: http://localhost:8080/api/
 
-name: agent-cms-light
+name: agent-cms
 
 services:
   proxy:
@@ -36,7 +36,7 @@ services:
       DATABASE_URL: postgresql://agentcms:agentcms@db:5432/agentcms?serverVersion=16&charset=utf8
       REDIS_URL: redis://redis:6379
       DEFAULT_URI: https://localhost:8443
-      CMS_SITE_TITLE: ${CMS_SITE_TITLE:-Agent CMS Light}
+      CMS_SITE_TITLE: ${CMS_SITE_TITLE:-Agent CMS}
       WORKSPACES_DIR: /var/www/workspaces
       APP_HOST_PLATFORM: ${APP_HOST_PLATFORM:-}
       PUBLIC_BASE_DOMAIN: ${PUBLIC_BASE_DOMAIN:-localhost}

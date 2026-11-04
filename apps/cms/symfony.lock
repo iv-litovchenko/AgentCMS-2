@@ -1,5 +1,5 @@
 {
-    "agent-cms-light/page-demo-block": {
+    "agent-cms/page-demo-block": {
         "version": "0.0.1"
     },
     "symfony/console": {

@@ -186,7 +186,7 @@ class ConnectorService
 
         $payload = [
             'mcpServers' => [
-                'agent-cms-light' => $server,
+                'agent-cms' => $server,
             ],
         ];
 

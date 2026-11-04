@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use AgentCmsLight\Shared\GreetingService as SharedGreetingService;
+use AgentCms\Shared\GreetingService as SharedGreetingService;
 
 class GreetingService
 {

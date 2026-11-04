@@ -57,7 +57,7 @@ class StarterEnvironmentService
             $runtime = 'Docker (контейнер CMS)';
         }
 
-        $stack = 'agent-cms-light: proxy, cms, db, redis, mcp, api, qwenpaw';
+        $stack = 'agent-cms: proxy, cms, db, redis, mcp, api, qwenpaw';
 
         return [
             'in_container' => $inContainer,
@@ -114,7 +114,7 @@ class StarterEnvironmentService
     private function buildTechnologies(): array
     {
         $items = [];
-        $items[] = ['name' => 'Agent CMS Light', 'version' => $this->appVersion];
+        $items[] = ['name' => 'Agent CMS', 'version' => $this->appVersion];
         $items[] = ['name' => 'PHP', 'version' => PHP_VERSION];
         $items[] = ['name' => 'Symfony', 'version' => Kernel::VERSION];
 

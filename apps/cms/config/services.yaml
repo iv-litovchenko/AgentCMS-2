@@ -1,7 +1,7 @@
 parameters:
     app.version: '0.0.1'
     app.cms_site_title: '%env(default:app_cms_site_title_default:CMS_SITE_TITLE)%'
-    app_cms_site_title_default: 'Agent CMS Light'
+    app_cms_site_title_default: 'Agent CMS'
     app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
     app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
     app.ui_menu_config: '%kernel.project_dir%/resources/cms/ui/menu.yaml'

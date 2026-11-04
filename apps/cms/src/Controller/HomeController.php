@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use AgentCmsLight\Pages\DemoBlock\DemoBlockService;
+use AgentCms\Pages\DemoBlock\DemoBlockService;
 use App\Service\StarterToggleService;
 use App\Service\WorkspaceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

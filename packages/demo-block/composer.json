@@ -1,6 +1,6 @@
 {
-    "name": "agent-cms-light/page-demo-block",
-    "description": "Demo page block (home cube) for Agent CMS Light",
+    "name": "agent-cms/page-demo-block",
+    "description": "Demo page block (home cube) for Agent CMS",
     "type": "symfony-bundle",
     "license": "proprietary",
     "version": "0.0.1",
@@ -14,12 +14,12 @@
     },
     "autoload": {
         "psr-4": {
-            "AgentCmsLight\\Pages\\DemoBlock\\": "src/"
+            "AgentCms\\Pages\\DemoBlock\\": "src/"
         }
     },
     "extra": {
         "symfony": {
-            "bundle": "AgentCmsLight\\Pages\\DemoBlock\\DemoBlockBundle"
+            "bundle": "AgentCms\\Pages\\DemoBlock\\DemoBlockBundle"
         }
     }
 }

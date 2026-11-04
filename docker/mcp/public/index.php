@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use AgentCmsLight\Shared\GreetingService;
+use AgentCms\Shared\GreetingService;
 
 require_once dirname(__DIR__) . '/shared/php/src/GreetingService.php';
 
@@ -80,7 +80,7 @@ function mcp_dispatch(string $rpcMethod, array $payload, GreetingService $greeti
         return [
             'protocolVersion' => '2024-11-05',
             'capabilities' => ['tools' => new stdClass()],
-            'serverInfo' => ['name' => 'agent-cms-light-mcp', 'version' => '0.1.0'],
+            'serverInfo' => ['name' => 'agent-cms-mcp', 'version' => '0.1.0'],
         ];
     }
 

@@ -1,11 +1,11 @@
 ---
-description: Agent CMS Light — правила проекта (полный rewrite)
+description: Agent CMS — правила проекта (полный rewrite)
 alwaysApply: true
 ---
 
-Проект — разработка **Agent CMS Light**, контейнера внешней цифровой памяти пользователя.
+Проект — разработка **Agent CMS**, контейнера внешней цифровой памяти пользователя.
 
-# Agent CMS Light
+# Agent CMS
 
 **Продукт:** преемник Agent CMS; полный rewrite, не форк «как есть».
 

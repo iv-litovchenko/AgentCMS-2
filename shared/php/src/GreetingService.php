@@ -1,6 +1,6 @@
 <?php
 
-namespace AgentCmsLight\Shared;
+namespace AgentCms\Shared;
 
 class GreetingService
 {
