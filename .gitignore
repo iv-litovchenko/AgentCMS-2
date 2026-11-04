@@ -29,6 +29,10 @@ auth.json
 # Docker
 docker-compose.override.yml
 docker-compose.override.starter-mounts.yml
+.dev-certs/*.pem
+.dev-certs/meta.yaml
+deploy/certs/*.pem
+deploy/certs/*.key
 apps/cms/var/connector/tokens.yaml
 
 # Build & tools

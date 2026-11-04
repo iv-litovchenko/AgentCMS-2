@@ -1,6 +1,7 @@
 # Локальная разработка: код с хоста в контейнер без rebuild.
 # Скопируйте: cp docker-compose.override.example.yml docker-compose.override.yml
 # Compose подхватит override автоматически при `docker compose up`.
+# HTTPS без предупреждения браузера: ./scripts/tls-dev-setup.sh и -f docker-compose.tls-dev.yml
 #
 # Монтируется:
 #   apps/cms      → /var/www/cms

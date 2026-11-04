@@ -1,0 +1,7 @@
+# Dev: доверенные сертификаты mkcert из .dev-certs/ (scripts/tls-dev-setup.sh).
+# docker compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.tls-dev.yml up -d
+
+services:
+  proxy:
+    volumes:
+      - ./.dev-certs:/etc/nginx/certs:ro

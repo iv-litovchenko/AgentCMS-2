@@ -1,0 +1,24 @@
+# Prod: порты 80/443 и TLS с хоста (Let's Encrypt, хостинг и т.д.).
+# Положите cert.pem + key.pem в deploy/certs/ (или TLS_CERTS_DIR).
+#
+# docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# .env: PUBLIC_BASE_DOMAIN=cms.example.com, PUBLIC_HTTP_PORT=80, PUBLIC_HTTPS_PORT=443
+
+services:
+  proxy:
+    ports:
+      - "${PUBLIC_HTTP_PORT:-80}:80"
+      - "${PUBLIC_HTTPS_PORT:-443}:443"
+    volumes:
+      - ${TLS_CERTS_DIR:-./deploy/certs}:/etc/nginx/certs:ro
+
+  cms:
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      PUBLIC_HTTP_PORT: ${PUBLIC_HTTP_PORT:-80}
+      PUBLIC_HTTPS_PORT: ${PUBLIC_HTTPS_PORT:-443}
+      PUBLIC_PREFERRED_SCHEME: https
+      REDIRECT_HTTP_TO_HTTPS: ${REDIRECT_HTTP_TO_HTTPS:-1}
+      DEFAULT_URI: https://${PUBLIC_BASE_DOMAIN:-localhost}
