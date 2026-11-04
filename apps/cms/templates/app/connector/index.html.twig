@@ -43,7 +43,7 @@
             </p>
             {% if not connector_connection.mcp_auth_configured %}
                 <p class="mt-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
-                    Токен MCP не задан: в JSON стоит заглушка <span class="font-mono">Bearer &lt;не задан&gt;</span>. Укажите значение в блоке «MCP · токены» и сохраните — затем обновите страницу для готового фрагмента.
+                    Токен MCP не задан: в JSON стоит заглушка <span class="font-mono">Bearer &lt;токен не задан&gt;</span>. Укажите значение в блоке «MCP · токены» и сохраните — затем обновите страницу для готового фрагмента.
                 </p>
             {% endif %}
             <pre class="mt-2 max-h-48 overflow-auto rounded-md border border-zinc-100 bg-zinc-900 p-3 text-xs leading-relaxed text-zinc-100">{{ connector_connection.mcp_json_example }}</pre>

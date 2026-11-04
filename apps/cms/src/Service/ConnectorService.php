@@ -218,7 +218,7 @@ class ConnectorService
     private function formatMcpAuthorizationHeaderValue(string $token): string
     {
         if ($token === '') {
-            return 'Bearer <не задан>';
+            return 'Bearer <токен не задан>';
         }
 
         return 'Bearer ' . $token;
