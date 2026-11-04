@@ -227,9 +227,9 @@ class ConnectorService
     private function resolveMcpAuthTokenId(): string
     {
         $registry = $this->loadRegistry();
-        $tokenId = $registry['mcp_auth_token_id'] ?? 'cursor_mcp';
+        $tokenId = $registry['mcp_auth_token_id'] ?? 'agent_cms_mcp';
         if (!is_string($tokenId) || !$this->isValidId($tokenId)) {
-            return 'cursor_mcp';
+            return 'agent_cms_mcp';
         }
 
         return $tokenId;

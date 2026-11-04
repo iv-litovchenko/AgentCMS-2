@@ -1,14 +1,14 @@
 # MCP-токены. URL подключения — PUBLIC_* (Стартер). Значения токенов — var/connector/tokens.yaml
 
 mcp_path: /mcp/
-# id токена для заголовка Authorization в примере mcp.json (Cursor)
-mcp_auth_token_id: cursor_mcp
+# id токена для заголовка Authorization в примере mcp.json
+mcp_auth_token_id: agent_cms_mcp
 
 tokens:
   items:
-    - id: cursor_mcp
-      label: Cursor MCP
-      description: Токен доступа к MCP (заготовка — Bearer или заголовок по настройке сервера)
+    - id: agent_cms_mcp
+      label: Agent CMS MCP
+      description: Токен доступа к MCP (Bearer или заголовок по настройке сервера)
     - id: agent_api
-      label: Agent API
+      label: Agent CMS API
       description: Токен для REST API CMS (Sanctum, когда будет включён)
