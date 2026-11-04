@@ -59,7 +59,7 @@ class StarterEnvironmentService
             $runtime = 'Docker (контейнер CMS)';
         }
 
-        $stack = 'agent-cms: proxy, cms, db, redis, mcp, api, qwenpaw';
+        $stack = 'agent-cms-web: proxy, cms, db, redis, mcp, api, qwenpaw';
 
         return [
             'in_container' => $inContainer,

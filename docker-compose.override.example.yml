@@ -10,7 +10,7 @@
 #
 # Первый запуск / после смены composer.json (в образе vendor без --dev):
 #   docker run --rm -v "$PWD/apps/cms:/app" -v "$PWD/shared/php:/shared/php" \
-#     -v agent-cms_cms_vendor:/app/vendor -w /app composer:2 \
+#     -v agent-cms-web_cms_vendor:/app/vendor -w /app composer:2 \
 #     composer install --no-interaction
 
 services:

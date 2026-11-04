@@ -8,7 +8,8 @@
 # MCP stub: http://localhost:8080/mcp/
 # API stub: http://localhost:8080/api/
 
-name: agent-cms
+# Имя проекта Compose (не путать с legacy ~/agent-cms — там тоже agent-cms).
+name: agent-cms-web
 
 services:
   proxy:
