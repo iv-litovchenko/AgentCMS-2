@@ -22,7 +22,8 @@ class StarterEnvironmentService
      *     docker: array{in_container: bool, runtime: string, stack: string},
      *     platform: array{host: string, container_os: string, php_os_family: string, machine: string},
      *     disk: array{path: string, total: string, free: string, total_bytes: int|false, free_bytes: int|false},
-     *     technologies: list<array{name: string, version: string}>
+     *     technologies: list<array{name: string, version: string}>,
+     *     internal_services: list<array{name: string, description: string, version: string}>
      * }
      */
     public function buildReport(): array
@@ -42,6 +43,7 @@ class StarterEnvironmentService
                 'free_bytes' => $freeBytes,
             ],
             'technologies' => $this->buildTechnologies(),
+            'internal_services' => $this->buildInternalServices(),
         ];
     }
 
@@ -137,17 +139,13 @@ class StarterEnvironmentService
         $items[] = ['name' => 'ext-redis', 'version' => $this->extensionVersion('redis')];
         $items[] = ['name' => 'ext-opcache', 'version' => $this->extensionVersion('opcache')];
 
-        foreach ($this->buildCliToolVersions() as $tool) {
-            $items[] = $tool;
-        }
-
         return $items;
     }
 
     /**
-     * @return list<array{name: string, version: string}>
+     * @return list<array{name: string, description: string, version: string}>
      */
-    private function buildCliToolVersions(): array
+    private function buildInternalServices(): array
     {
         if (!is_file($this->cliToolsRegistryPath)) {
             return [];
@@ -174,6 +172,11 @@ class StarterEnvironmentService
                 continue;
             }
 
+            $description = $rawItem['description'] ?? '';
+            if (!is_string($description)) {
+                $description = '';
+            }
+
             $binary = $rawItem['binary'] ?? $label;
             if (!is_string($binary)) {
                 $binary = $label;
@@ -191,6 +194,7 @@ class StarterEnvironmentService
 
             $items[] = [
                 'name' => $label,
+                'description' => $description,
                 'version' => $version,
             ];
         }

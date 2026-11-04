@@ -51,7 +51,7 @@ services:
       subdomain: qwenpaw
       compose_service: qwenpaw
       default_enabled: true
-      description: Сервис QwenPaw (stub)
+      description: Отдельный сервис на поддомене qwenpaw (stub)
 
 zones:
   main:

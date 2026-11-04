@@ -1,14 +1,27 @@
-# CLI в образе cms (Dockerfile). Версии — блок «Технологии» в Стартере.
+# CLI в контейнере cms — блок «Внутренние сервисы» в Стартере (имя, описание, версия).
 items:
   - label: git
     binary: git
+    description: Система контроля версий в образе CMS
     version_args:
       - --version
   - label: bash
     binary: bash
+    description: Оболочка для скриптов и отладки в контейнере
     version_args:
       - --version
   - label: curl
     binary: curl
+    description: HTTP-клиент для проверок и интеграций
+    version_args:
+      - --version
+  - label: Claude CLI
+    binary: claude
+    description: CLI Anthropic Claude Code (установка в образ — по мере подключения)
+    version_args:
+      - --version
+  - label: Codex CLI
+    binary: codex
+    description: CLI OpenAI Codex (установка в образ — по мере подключения)
     version_args:
       - --version
