@@ -1,0 +1,28 @@
+# Цитаты в шапке (короткие строки рядом с логотипом «A»).
+items:
+  - text: Agent CMS
+    hold_ms: 9000
+  - text: My Graph ORM
+    hold_ms: 9000
+  - text: My Planet
+    hold_ms: 6500
+  - text: My Radar
+    hold_ms: 6500
+  - text: My World
+    hold_ms: 6500
+  - text: My Compass
+    hold_ms: 6500
+  - text: My Atlas
+    hold_ms: 6500
+  - text: My Storage
+    hold_ms: 6500
+  - text: My Progress
+    hold_ms: 6500
+  - text: My Memory
+    hold_ms: 6500
+  - text: My Knowledge
+    hold_ms: 6500
+  - text: My Tree
+    hold_ms: 6500
+  - text: My Box
+    hold_ms: 6500

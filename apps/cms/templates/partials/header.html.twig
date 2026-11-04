@@ -1,8 +1,16 @@
 <header class="border-b border-zinc-200 bg-white">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 sm:px-6">
-        <a href="{{ path('home') }}" class="flex shrink-0 items-center gap-2 text-sm font-semibold tracking-tight text-zinc-900">
-            <span class="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900 text-xs font-bold text-white">A</span>
-            {{ cms_site_title }}
+        <a href="{{ path('home') }}"
+           class="flex min-w-0 shrink items-center gap-2 text-sm font-semibold tracking-tight text-zinc-900"
+           title="{% if header_quote %}Цитата · {{ cms_site_title }}{% else %}{{ cms_site_title }}{% endif %}">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-zinc-900 text-xs font-bold text-white">A</span>
+            <span class="truncate">
+                {% if header_quote %}
+                    {{ header_quote }}
+                {% else %}
+                    {{ cms_site_title }}
+                {% endif %}
+            </span>
         </a>
 
         <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-3">

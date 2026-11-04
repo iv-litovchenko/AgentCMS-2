@@ -5,6 +5,8 @@ parameters:
     app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
     app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
     app.ui_menu_config: '%kernel.project_dir%/resources/cms/ui/menu.yaml'
+    app.footer_quotes_registry: '%kernel.project_dir%/resources/cms/ui/footer-quotes.yaml'
+    app.header_quotes_registry: '%kernel.project_dir%/resources/cms/ui/header-quotes.yaml'
     app.starter_packages_registry: '%kernel.project_dir%/resources/cms/starter/packages.yaml'
     app.starter_cli_tools_registry: '%kernel.project_dir%/resources/cms/starter/cli_tools.yaml'
     app.starter_toggles_file: '%kernel.project_dir%/var/starter/toggles.yaml'
@@ -50,6 +52,14 @@ services:
             $publicHttpPort: '%app.public_http_port%'
             $publicHttpsPort: '%app.public_https_port%'
             $publicPreferredScheme: '%app.public_preferred_scheme%'
+
+    App\Service\FooterQuoteService:
+        arguments:
+            $registryPath: '%app.footer_quotes_registry%'
+
+    App\Service\HeaderQuoteService:
+        arguments:
+            $registryPath: '%app.header_quotes_registry%'
 
     App\Service\StarterEnvironmentService:
         arguments:
