@@ -1,0 +1,7 @@
+# Установленные расширения (Composer-пакеты из packages/). Состояние — var/starter/toggles.yaml
+items:
+  - id: demo_block
+    label: Demo block
+    description: Кубик на главной из packages/demo-block
+    composer_package: agent-cms-light/page-demo-block
+    default_enabled: true

@@ -22,6 +22,8 @@ class UiMenuService
 
     private string $publicPreferredScheme;
 
+    private StarterToggleService $starterToggleService;
+
     /** @var array<string, mixed>|null */
     private ?array $configCache = null;
 
@@ -29,6 +31,7 @@ class UiMenuService
         string $uiMenuConfigPath,
         UrlGeneratorInterface $urlGenerator,
         RequestStack $requestStack,
+        StarterToggleService $starterToggleService,
         string $publicBaseDomain,
         string $publicHttpPort,
         string $publicHttpsPort,
@@ -37,6 +40,7 @@ class UiMenuService
         $this->configPath = $uiMenuConfigPath;
         $this->urlGenerator = $urlGenerator;
         $this->requestStack = $requestStack;
+        $this->starterToggleService = $starterToggleService;
         $this->publicBaseDomain = $publicBaseDomain;
         $this->publicHttpPort = $publicHttpPort;
         $this->publicHttpsPort = $publicHttpsPort;
@@ -397,6 +401,15 @@ class UiMenuService
 
             $subdomain = $rawItem['subdomain'] ?? '';
             if (!is_string($subdomain) || !$this->isValidSubdomain($subdomain)) {
+                continue;
+            }
+
+            $serviceId = $rawItem['id'] ?? $subdomain;
+            if (!is_string($serviceId) || $serviceId === '') {
+                $serviceId = $subdomain;
+            }
+
+            if (!$this->starterToggleService->isServiceEnabled($serviceId)) {
                 continue;
             }
 

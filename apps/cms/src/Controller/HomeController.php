@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use AgentCmsLight\Pages\DemoBlock\DemoBlockService;
+use App\Service\StarterToggleService;
 use App\Service\WorkspaceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,16 @@ class HomeController extends AbstractController
 
     private WorkspaceService $workspaceService;
 
-    public function __construct(DemoBlockService $demoBlockService, WorkspaceService $workspaceService)
-    {
+    private StarterToggleService $starterToggleService;
+
+    public function __construct(
+        DemoBlockService $demoBlockService,
+        WorkspaceService $workspaceService,
+        StarterToggleService $starterToggleService
+    ) {
         $this->demoBlockService = $demoBlockService;
         $this->workspaceService = $workspaceService;
+        $this->starterToggleService = $starterToggleService;
     }
 
     #[Route('/', name: 'home')]
@@ -34,10 +41,15 @@ class HomeController extends AbstractController
 
     private function renderHome(bool $compact): Response
     {
+        $demoBlock = null;
+        if ($this->starterToggleService->isPackageEnabled('demo_block')) {
+            $demoBlock = $this->demoBlockService->getBlockData();
+        }
+
         return $this->render('home/index.html.twig', [
             'compact' => $compact,
             'title' => 'Agent CMS Light',
-            'demo_block' => $this->demoBlockService->getBlockData(),
+            'demo_block' => $demoBlock,
             'storages' => $this->buildStoragesForView(),
         ]);
     }

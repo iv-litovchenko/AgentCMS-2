@@ -3,6 +3,8 @@ parameters:
     app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
     app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
     app.ui_menu_config: '%kernel.project_dir%/resources/cms/ui/menu.yaml'
+    app.starter_packages_registry: '%kernel.project_dir%/resources/cms/starter/packages.yaml'
+    app.starter_toggles_file: '%kernel.project_dir%/var/starter/toggles.yaml'
     app.public_base_domain: '%env(default:app_public_base_domain_default:PUBLIC_BASE_DOMAIN)%'
     app_public_base_domain_default: 'localhost'
     app.public_http_port: '%env(default:app_public_http_port_default:PUBLIC_HTTP_PORT)%'
@@ -35,3 +37,9 @@ services:
     App\Service\StarterEnvironmentService:
         arguments:
             $appVersion: '%app.version%'
+
+    App\Service\StarterToggleService:
+        arguments:
+            $packagesRegistryPath: '%app.starter_packages_registry%'
+            $menuConfigPath: '%app.ui_menu_config%'
+            $togglesFilePath: '%app.starter_toggles_file%'

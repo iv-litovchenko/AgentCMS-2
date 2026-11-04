@@ -3,7 +3,10 @@
 {% block title %}{{ app.label }} — Agent CMS Light{% endblock %}
 
 {% block app_content %}
-    <h1 class="mb-5 text-2xl font-semibold tracking-tight text-zinc-900">{{ app.label }}</h1>
+    {% include 'app/_page_plashka.html.twig' with {
+        plashka_label: app.label,
+        plashka_aria_label: app.label,
+    } %}
 
     <div class="space-y-4">
         <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
@@ -63,5 +66,36 @@
                 {% endfor %}
             </dl>
         </section>
+
+        <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+            <h2 class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Пакеты</h2>
+            {% if starter_packages is empty %}
+                <p class="text-sm text-zinc-500">Пусто</p>
+            {% else %}
+                <ul>
+                    {% for pkg in starter_packages %}
+                        {% include 'app/starter/_toggle_row.html.twig' with { item: pkg, kind: 'package' } %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+
+        <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+            <h2 class="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Сервисы</h2>
+            {% if starter_services is empty %}
+                <p class="text-sm text-zinc-500">Пусто</p>
+            {% else %}
+                <ul>
+                    {% for svc in starter_services %}
+                        {% include 'app/starter/_toggle_row.html.twig' with { item: svc, kind: 'service' } %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'app/starter/_toggle_script.html.twig' %}
 {% endblock %}

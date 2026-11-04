@@ -1,0 +1,8 @@
+{% extends 'errors/not_found.html.twig' %}
+
+{% set message = 'Страница не найдена.' %}
+{% if exception is defined and exception.message is defined %}
+    {% if exception.message != '' and exception.message != 'Not Found' %}
+        {% set message = exception.message %}
+    {% endif %}
+{% endif %}

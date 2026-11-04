@@ -1,0 +1,18 @@
+<li class="flex items-center justify-between gap-3 py-2 text-sm {% if not loop.last %}border-b border-zinc-100{% endif %}">
+    <div class="min-w-0 flex-1">
+        <p class="font-medium text-zinc-900">{{ item.label }}</p>
+        {% if item.description %}
+            <p class="mt-0.5 text-xs text-zinc-500">{{ item.description }}</p>
+        {% endif %}
+    </div>
+    <label class="relative inline-flex shrink-0 cursor-pointer items-center {% if item.can_toggle is defined and not item.can_toggle %}cursor-not-allowed opacity-50{% endif %}">
+        <input type="checkbox"
+               class="peer sr-only starter-toggle-input"
+               data-kind="{{ kind }}"
+               data-id="{{ item.id }}"
+               {% if item.enabled %}checked{% endif %}
+               {% if item.can_toggle is defined and not item.can_toggle %}disabled{% endif %}
+               {% if item.installed is defined and not item.installed %}disabled{% endif %}>
+        <span class="h-5 w-9 rounded-full bg-zinc-200 after:absolute after:left-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-zinc-300 after:bg-white after:transition-all peer-checked:bg-zinc-900 peer-checked:after:translate-x-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-zinc-400 peer-disabled:opacity-60"></span>
+    </label>
+</li>

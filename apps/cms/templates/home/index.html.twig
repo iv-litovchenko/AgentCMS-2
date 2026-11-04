@@ -35,7 +35,9 @@
         </aside>
 
         <div class="flex min-w-0 flex-1 flex-col {{ is_compact ? 'gap-2' : 'gap-4' }}">
-            {% include '@DemoBlock/block.html.twig' %}
+            {% if demo_block is not null %}
+                {% include '@DemoBlock/block.html.twig' %}
+            {% endif %}
 
             {# Список хранилищ — заготовка #}
             <section class="rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="storages-heading">

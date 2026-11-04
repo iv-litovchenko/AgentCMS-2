@@ -7,3 +7,4 @@ RUN apk add --no-cache openssl \
         -subj "/CN=localhost" \
         -addext "subjectAltName=DNS:localhost,DNS:*.localhost,IP:127.0.0.1"
 COPY docker/proxy/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/proxy/static/404-service.html /usr/share/nginx/html/404-service.html

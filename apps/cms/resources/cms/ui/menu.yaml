@@ -40,7 +40,10 @@ apps:
 services:
   items:
     - label: QwenPaw
+      id: qwenpaw
       subdomain: qwenpaw
+      compose_service: qwenpaw
+      default_enabled: true
       description: Сервис QwenPaw (stub)
 
 zones:

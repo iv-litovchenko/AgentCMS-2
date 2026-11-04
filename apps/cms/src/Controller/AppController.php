@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\StarterEnvironmentService;
+use App\Service\StarterToggleService;
 use App\Service\UiMenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +16,16 @@ class AppController extends AbstractController
 
     private StarterEnvironmentService $starterEnvironmentService;
 
-    public function __construct(UiMenuService $uiMenuService, StarterEnvironmentService $starterEnvironmentService)
-    {
+    private StarterToggleService $starterToggleService;
+
+    public function __construct(
+        UiMenuService $uiMenuService,
+        StarterEnvironmentService $starterEnvironmentService,
+        StarterToggleService $starterToggleService
+    ) {
         $this->uiMenuService = $uiMenuService;
         $this->starterEnvironmentService = $starterEnvironmentService;
+        $this->starterToggleService = $starterToggleService;
     }
 
     #[Route('/app/{name}/{section}', name: 'app_section', requirements: ['name' => '[a-z0-9_-]+', 'section' => '[a-z0-9_-]+'], methods: ['GET', 'POST'])]
@@ -73,6 +80,8 @@ class AppController extends AbstractController
             return $this->render('app/starter/index.html.twig', [
                 'app' => $app,
                 'environment' => $this->starterEnvironmentService->buildReport(),
+                'starter_packages' => $this->starterToggleService->listPackages(),
+                'starter_services' => $this->starterToggleService->listServices(),
             ]);
         }
 
