@@ -1,0 +1,67 @@
+{% extends 'app/layout.html.twig' %}
+
+{% block title %}{{ app.label }} — Agent CMS Light{% endblock %}
+
+{% block app_content %}
+    <h1 class="mb-5 text-2xl font-semibold tracking-tight text-zinc-900">{{ app.label }}</h1>
+
+    <div class="space-y-4">
+        <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+            <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-zinc-500">Docker</h2>
+            <dl class="divide-y divide-zinc-100 text-sm">
+                <div class="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                    <dt class="text-zinc-500">Среда</dt>
+                    <dd class="font-medium text-zinc-900">{{ environment.docker.runtime }}</dd>
+                </div>
+                <div class="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                    <dt class="text-zinc-500">Стек</dt>
+                    <dd class="text-zinc-900">{{ environment.docker.stack }}</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+            <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-zinc-500">ОС и платформа</h2>
+            <dl class="divide-y divide-zinc-100 text-sm">
+                <div class="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                    <dt class="text-zinc-500">Хост</dt>
+                    <dd class="font-medium text-zinc-900">{{ environment.platform.host }}</dd>
+                </div>
+                <div class="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                    <dt class="text-zinc-500">ОС PHP</dt>
+                    <dd class="text-zinc-900">{{ environment.platform.container_os }} · {{ environment.platform.php_os_family }}</dd>
+                </div>
+                <div class="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                    <dt class="text-zinc-500">Архитектура</dt>
+                    <dd class="text-zinc-900">{{ environment.platform.machine }}</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+            <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-zinc-500">Диск</h2>
+            <dl class="grid gap-3 sm:grid-cols-2">
+                <div class="rounded-md border border-zinc-100 bg-zinc-50 px-4 py-3">
+                    <dt class="text-xs text-zinc-500">Всего</dt>
+                    <dd class="mt-1 text-lg font-semibold tabular-nums text-zinc-900">{{ environment.disk.total }}</dd>
+                </div>
+                <div class="rounded-md border border-zinc-100 bg-zinc-50 px-4 py-3">
+                    <dt class="text-xs text-zinc-500">Свободно</dt>
+                    <dd class="mt-1 text-lg font-semibold tabular-nums text-zinc-900">{{ environment.disk.free }}</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+            <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-zinc-500">Технологии</h2>
+            <dl class="divide-y divide-zinc-100 rounded-md border border-zinc-100 text-sm">
+                {% for tech in environment.technologies %}
+                    <div class="grid gap-1 px-3 py-2.5 sm:grid-cols-[12rem_1fr] sm:items-center sm:gap-4">
+                        <dt class="font-medium text-zinc-900">{{ tech.name }}</dt>
+                        <dd class="truncate text-zinc-600 sm:text-right">{{ tech.version }}</dd>
+                    </div>
+                {% endfor %}
+            </dl>
+        </section>
+    </div>
+{% endblock %}

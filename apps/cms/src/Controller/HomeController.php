@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DemoBlockBundle\Service\DemoBlockService;
+use AgentCmsLight\Pages\DemoBlock\DemoBlockService;
 use App\Service\WorkspaceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

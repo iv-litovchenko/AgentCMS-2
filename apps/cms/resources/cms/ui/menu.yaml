@@ -1,0 +1,60 @@
+# UI: зоны меню. route — имя маршрута Symfony; active_routes — подсветка пункта.
+# apps — /app/{name} и /app/{name}/{section}
+
+profile:
+  display_name: Администратор
+  email: user@cms.local
+  initials: А
+
+apps:
+  items:
+    - label: Документация
+      name: documentation
+      sections:
+        - label: Хорошие практики
+          slug: practices
+        - label: Типография
+          slug: typography
+        - label: API
+          slug: api
+        - label: MCP
+          slug: mcp
+    - label: Стартер
+      name: starter
+      hide_apps_nav: true
+    - label: Чат
+      name: chat
+    - label: Окна
+      name: windows
+    - label: Командер
+      name: commander
+
+zones:
+  main:
+    items:
+      - label: Главная
+        route: home
+        active_routes:
+          - home
+          - home_compact
+      - label: Хранилища
+        route: workspace_index
+        active_routes:
+          - workspace_index
+          - workspace_new
+          - workspace_edit
+
+  profile_dropdown:
+    items:
+      - label: Профиль
+        enabled: false
+      - label: Настройки
+        enabled: false
+      - divider: true
+      - label: 'Главная (compact)'
+        route: home_compact
+        active_routes:
+          - home_compact
+      - divider: true
+      - label: Выйти
+        enabled: false

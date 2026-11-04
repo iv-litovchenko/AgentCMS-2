@@ -34,6 +34,7 @@ services:
       REDIS_URL: redis://redis:6379
       DEFAULT_URI: http://localhost:8080
       WORKSPACES_DIR: /var/www/workspaces
+      APP_HOST_PLATFORM: ${APP_HOST_PLATFORM:-}
     volumes:
       - ./workspaces:/var/www/workspaces
     depends_on:

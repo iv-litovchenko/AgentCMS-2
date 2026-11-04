@@ -2,6 +2,7 @@ parameters:
     app.version: '0.0.1'
     app.workspaces_dir: '%env(default:app_workspaces_dir_default:WORKSPACES_DIR)%'
     app_workspaces_dir_default: '%kernel.project_dir%/../../workspaces'
+    app.ui_menu_config: '%kernel.project_dir%/resources/cms/ui/menu.yaml'
 
 services:
     _defaults:
@@ -10,9 +11,15 @@ services:
 
     App\:
         resource: '../src/'
-        exclude:
-            - '../src/DemoBlockBundle/DemoBlockBundle.php'
 
     App\Service\WorkspaceService:
         arguments:
             $workspacesDir: '%app.workspaces_dir%'
+
+    App\Service\UiMenuService:
+        arguments:
+            $uiMenuConfigPath: '%app.ui_menu_config%'
+
+    App\Service\StarterEnvironmentService:
+        arguments:
+            $appVersion: '%app.version%'

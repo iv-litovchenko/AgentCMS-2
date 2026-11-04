@@ -5,6 +5,7 @@
 # Монтируется:
 #   apps/cms      → /var/www/cms
 #   shared/php    → /var/www/shared/php  (autoload AgentCmsLight\Shared)
+#   packages      → /var/www/packages    (symlink vendor → ../../../packages/…)
 # vendor — именованный том (не затирается bind-mount'ом).
 #
 # Первый запуск / после смены composer.json (в образе vendor без --dev):
@@ -17,9 +18,11 @@ services:
     environment:
       APP_ENV: dev
       APP_DEBUG: "1"
+      APP_HOST_PLATFORM: mac
     volumes:
       - ./apps/cms:/var/www/cms
       - ./shared/php:/var/www/shared/php
+      - ./packages:/var/www/packages
       - cms_vendor:/var/www/cms/vendor
 
 volumes:

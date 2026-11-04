@@ -1,5 +1,6 @@
 FROM composer:2 AS vendor
 WORKDIR /app
+COPY packages /packages
 COPY apps/cms/ .
 COPY shared/php /shared/php
 RUN composer install --no-interaction --prefer-dist --no-dev --no-scripts \

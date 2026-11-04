@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e53298d8dc83731bc7b554d5b7d534af",
+    "content-hash": "aa818b378cf2b1a1f5dcb437cc75a6b3",
     "packages": [
+        {
+            "name": "agent-cms-light/page-demo-block",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../../packages/demo-block",
+                "reference": "80559c9c3bd60b01fadeacb044a071b6ef9bfee2"
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/config": "^7.4",
+                "symfony/dependency-injection": "^7.4",
+                "symfony/framework-bundle": "^7.4",
+                "symfony/http-kernel": "^7.4",
+                "symfony/yaml": "^7.4"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "bundle": "AgentCmsLight\\Pages\\DemoBlock\\DemoBlockBundle"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AgentCmsLight\\Pages\\DemoBlock\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Demo page block (home cube) for Agent CMS Light",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
         {
             "name": "psr/cache",
             "version": "3.0.0",
@@ -4217,7 +4253,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "agent-cms-light/page-demo-block": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

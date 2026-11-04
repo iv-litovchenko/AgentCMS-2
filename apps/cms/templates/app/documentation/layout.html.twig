@@ -1,0 +1,8 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block main %}
+    <div class="mx-auto w-full max-w-6xl flex-1 px-4 py-4 sm:px-6">
+        {% include 'app/documentation/_section_nav.html.twig' %}
+        {% block doc_content %}{% endblock %}
+    </div>
+{% endblock %}

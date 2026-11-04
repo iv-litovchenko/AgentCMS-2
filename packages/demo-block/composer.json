@@ -1,0 +1,25 @@
+{
+    "name": "agent-cms-light/page-demo-block",
+    "description": "Demo page block (home cube) for Agent CMS Light",
+    "type": "symfony-bundle",
+    "license": "proprietary",
+    "version": "0.0.1",
+    "require": {
+        "php": ">=8.2",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/config": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "AgentCmsLight\\Pages\\DemoBlock\\": "src/"
+        }
+    },
+    "extra": {
+        "symfony": {
+            "bundle": "AgentCmsLight\\Pages\\DemoBlock\\DemoBlockBundle"
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DemoBlockBundle\Service;
+namespace AgentCmsLight\Pages\DemoBlock;
 
 class DemoBlockService
 {
@@ -13,16 +13,16 @@ class DemoBlockService
             'title' => 'Demo Block',
             'items' => [
                 [
-                    'label' => 'Кубик из бандла',
-                    'detail' => 'Данные из DemoBlockService',
+                    'label' => 'Пакет packages/demo-block',
+                    'detail' => 'agent-cms-light/page-demo-block через Composer',
                 ],
                 [
                     'label' => 'Twig partial',
-                    'detail' => 'Resources/views/block.html.twig',
+                    'detail' => '@DemoBlock/block.html.twig',
                 ],
                 [
                     'label' => 'Расширение',
-                    'detail' => 'Новый блок без правок ядра',
+                    'detail' => 'Новый блок без правок ядра CMS',
                 ],
             ],
         ];

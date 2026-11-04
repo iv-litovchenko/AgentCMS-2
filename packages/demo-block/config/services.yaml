@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    AgentCmsLight\Pages\DemoBlock\:
+        resource: '../src/'
+        exclude:
+            - '../src/DemoBlockBundle.php'
+            - '../src/DependencyInjection/'

@@ -6,6 +6,7 @@ services:
     environment:
       APP_ENV: dev
       APP_DEBUG: "1"
+      APP_HOST_PLATFORM: windows
     volumes:
       - ../apps/cms:/var/www/cms
       - ../shared/php:/var/www/shared/php

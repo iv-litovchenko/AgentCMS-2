@@ -3,7 +3,17 @@
     "type": "project",
     "license": "proprietary",
     "version": "0.0.1",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/demo-block",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
+        "agent-cms-light/page-demo-block": "@dev",
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
