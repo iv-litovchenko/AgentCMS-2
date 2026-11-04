@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Service\ProjectReadmeService;
+use App\Service\ConnectorService;
+use App\Service\StarterEnvService;
+use App\Service\StarterMountService;
 use App\Service\StarterEnvironmentService;
 use App\Service\StarterLogJournalService;
 use App\Service\StarterToggleService;
@@ -24,18 +27,30 @@ class AppController extends AbstractController
 
     private ProjectReadmeService $projectReadmeService;
 
+    private StarterEnvService $starterEnvService;
+
+    private StarterMountService $starterMountService;
+
+    private ConnectorService $connectorService;
+
     public function __construct(
         UiMenuService $uiMenuService,
         StarterEnvironmentService $starterEnvironmentService,
         StarterToggleService $starterToggleService,
         StarterLogJournalService $starterLogJournalService,
-        ProjectReadmeService $projectReadmeService
+        ProjectReadmeService $projectReadmeService,
+        StarterEnvService $starterEnvService,
+        StarterMountService $starterMountService,
+        ConnectorService $connectorService
     ) {
         $this->uiMenuService = $uiMenuService;
         $this->starterEnvironmentService = $starterEnvironmentService;
         $this->starterToggleService = $starterToggleService;
         $this->starterLogJournalService = $starterLogJournalService;
         $this->projectReadmeService = $projectReadmeService;
+        $this->starterEnvService = $starterEnvService;
+        $this->starterMountService = $starterMountService;
+        $this->connectorService = $connectorService;
     }
 
     #[Route('/app/{name}/{section}', name: 'app_section', requirements: ['name' => '[a-z0-9_-]+', 'section' => '[a-z0-9_-]+'], methods: ['GET', 'POST'])]
@@ -50,6 +65,10 @@ class AppController extends AbstractController
             return $this->redirectToRoute('app_show', $params, Response::HTTP_MOVED_PERMANENTLY);
         }
 
+        if ($name === 'connector') {
+            return $this->redirectToRoute('app_show', ['name' => 'connector'], Response::HTTP_MOVED_PERMANENTLY);
+        }
+
         $app = $this->uiMenuService->findAppByName($name);
         if ($app === null) {
             throw $this->createNotFoundException('Приложение не найдено.');
@@ -61,6 +80,7 @@ class AppController extends AbstractController
         }
 
         $template = 'app/documentation/sections/' . $section . '.html.twig';
+
         if (!$this->container->get('twig')->getLoader()->exists($template)) {
             throw $this->createNotFoundException('Раздел не найден.');
         }
@@ -103,18 +123,63 @@ class AppController extends AbstractController
             ]);
         }
 
+        if ($name === 'connector') {
+            $flashBag = $request->getSession()->getFlashBag();
+
+            return $this->render('app/connector/index.html.twig', [
+                'app' => $app,
+                'connector_connection' => $this->connectorService->buildCurrentConnection(),
+                'connector_tokens' => $this->connectorService->listTokens(),
+                'connector_tokens_path' => $this->connectorService->getTokensFileDisplayPath(),
+                'connector_flashes' => [
+                    'success' => $flashBag->get('success'),
+                    'error' => $flashBag->get('error'),
+                ],
+            ]);
+        }
+
         if ($name === 'starter') {
+            $flashBag = $request->getSession()->getFlashBag();
+
             return $this->render('app/starter/index.html.twig', [
                 'app' => $app,
                 'environment' => $this->starterEnvironmentService->buildReport(),
+                'starter_env_groups' => $this->starterEnvService->listGroups(),
+                'starter_env_values_path' => $this->starterEnvService->getValuesFileDisplayPath(),
+                'starter_mounts' => $this->starterMountService->listMounts(),
+                'starter_mount_ids' => $this->buildStarterMountIds(),
+                'starter_mount_presets' => $this->starterMountService->listPresetsForPlatform(
+                    $this->starterMountService->resolveHostPlatform()
+                ),
+                'starter_mount_platform' => $this->starterMountService->resolveHostPlatform(),
+                'starter_mounts_config_path' => $this->starterMountService->getMountsFileDisplayPath(),
+                'starter_mounts_override_path' => $this->starterMountService->getOverrideSnippetPath(),
+                'starter_mounts_override_yaml' => $this->starterMountService->buildOverrideYaml(),
                 'starter_packages' => $this->starterToggleService->listPackages(),
                 'starter_services' => $this->starterToggleService->listServices(),
                 'starter_log_journal' => $this->starterLogJournalService->buildJournal(),
+                'starter_flashes' => [
+                    'success' => $flashBag->get('success'),
+                    'error' => $flashBag->get('error'),
+                ],
             ]);
         }
 
         return $this->render('app/show.html.twig', [
             'app' => $app,
         ]);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function buildStarterMountIds(): array
+    {
+        $ids = [];
+        foreach ($this->starterMountService->listMounts() as $mount) {
+            $ids[] = $mount['id'];
+        }
+
+        return $ids;
     }
 }

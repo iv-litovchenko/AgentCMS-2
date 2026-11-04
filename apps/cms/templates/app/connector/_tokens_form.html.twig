@@ -1,0 +1,40 @@
+<section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+    <div class="mb-1 flex flex-wrap items-center gap-2">
+        <h2 class="text-xs font-medium uppercase tracking-wide text-zinc-500">MCP · токены</h2>
+        {% include 'home/_section_todo_badge.html.twig' %}
+    </div>
+    <p class="mb-3 text-xs text-zinc-500">
+        Реестр <span class="font-mono">resources/cms/connector/tokens.registry.yaml</span>
+        · значения <span class="font-mono">{{ connector_tokens_path }}</span>
+    </p>
+
+    <form method="post" action="{{ path('connector_tokens_save') }}" class="space-y-3">
+        <input type="hidden" name="_token" value="{{ csrf_token('connector_tokens') }}">
+
+        {% for token in connector_tokens %}
+            <div class="rounded-md border border-zinc-100 bg-zinc-50 p-3">
+                <label for="token-{{ token.id }}" class="block text-sm font-medium text-zinc-900">{{ token.label }}</label>
+                {% if token.description %}
+                    <p class="mt-0.5 text-xs text-zinc-500">{{ token.description }}</p>
+                {% endif %}
+                <input
+                    id="token-{{ token.id }}"
+                    type="password"
+                    name="tokens[{{ token.id }}]"
+                    value="{{ token.value }}"
+                    autocomplete="off"
+                    placeholder="пусто — не задано"
+                    class="mt-2 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 font-mono text-sm text-zinc-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+            </div>
+        {% else %}
+            <p class="text-sm text-zinc-500">Токены не описаны в реестре.</p>
+        {% endfor %}
+
+        {% if connector_tokens is not empty %}
+            <button type="submit" class="rounded-md bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-800">
+                Сохранить токены
+            </button>
+        {% endif %}
+    </form>
+</section>

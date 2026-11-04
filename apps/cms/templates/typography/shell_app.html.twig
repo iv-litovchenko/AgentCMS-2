@@ -3,7 +3,7 @@
 {% set is_compact = compact|default(false) %}
 {% set page_title = cms_app.label|default('Типография') %}
 
-{% block title %}{{ page_title }} — Agent CMS Light{% endblock %}
+{% block title %}{{ page_title }} — {{ cms_site_title }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

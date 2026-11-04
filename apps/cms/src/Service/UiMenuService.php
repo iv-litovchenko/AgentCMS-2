@@ -455,7 +455,7 @@ class UiMenuService
         $host = $subdomain . '.' . $this->publicBaseDomain;
         $scheme = $this->publicPreferredScheme;
         if ($scheme !== 'http' && $scheme !== 'https') {
-            $scheme = 'http';
+            $scheme = 'https';
         }
 
         $portSuffix = '';

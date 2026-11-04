@@ -28,6 +28,8 @@ auth.json
 
 # Docker
 docker-compose.override.yml
+docker-compose.override.starter-mounts.yml
+apps/cms/var/connector/tokens.yaml
 
 # Build & tools
 /dist/

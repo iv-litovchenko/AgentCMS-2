@@ -35,13 +35,15 @@ services:
       APP_DEBUG: "0"
       DATABASE_URL: postgresql://agentcms:agentcms@db:5432/agentcms?serverVersion=16&charset=utf8
       REDIS_URL: redis://redis:6379
-      DEFAULT_URI: http://localhost:8080
+      DEFAULT_URI: https://localhost:8443
+      CMS_SITE_TITLE: ${CMS_SITE_TITLE:-Agent CMS Light}
       WORKSPACES_DIR: /var/www/workspaces
       APP_HOST_PLATFORM: ${APP_HOST_PLATFORM:-}
       PUBLIC_BASE_DOMAIN: ${PUBLIC_BASE_DOMAIN:-localhost}
       PUBLIC_HTTP_PORT: ${PUBLIC_HTTP_PORT:-8080}
       PUBLIC_HTTPS_PORT: ${PUBLIC_HTTPS_PORT:-8443}
-      PUBLIC_PREFERRED_SCHEME: ${PUBLIC_PREFERRED_SCHEME:-http}
+      PUBLIC_PREFERRED_SCHEME: ${PUBLIC_PREFERRED_SCHEME:-https}
+      REDIRECT_HTTP_TO_HTTPS: ${REDIRECT_HTTP_TO_HTTPS:-1}
     volumes:
       - ./workspaces:/var/www/workspaces
     depends_on:

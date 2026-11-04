@@ -6,7 +6,10 @@
 ]) %}
 <section class="w-full rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="in-focus-heading">
     <div class="border-b border-zinc-100 {{ is_compact ? 'px-3 py-2' : 'px-4 py-3' }}">
-        <h2 id="in-focus-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">В фокусе</h2>
+        <div class="flex flex-wrap items-center gap-2">
+            <h2 id="in-focus-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">В фокусе</h2>
+            {% include 'home/_section_todo_badge.html.twig' %}
+        </div>
         <p class="mt-0.5 text-xs text-zinc-500">Быстрая навигация — над чем работаете сейчас.</p>
     </div>
     <ul class="divide-y divide-zinc-100">

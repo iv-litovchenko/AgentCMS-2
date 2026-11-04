@@ -7,7 +7,7 @@ RUN composer install --no-interaction --prefer-dist --no-dev --no-scripts \
     && composer dump-autoload --optimize --classmap-authoritative
 
 FROM php:8.2-fpm-alpine
-RUN apk add --no-cache icu-dev postgresql-dev \
+RUN apk add --no-cache icu-dev postgresql-dev git bash openssh-client curl \
     && docker-php-ext-install intl opcache pdo_pgsql
 RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install redis \
@@ -18,7 +18,7 @@ WORKDIR /var/www/cms
 COPY --from=vendor /app/vendor ./vendor
 COPY apps/cms/ .
 COPY shared/php /var/www/shared/php
-RUN mkdir -p var/cache var/log var/starter && chown -R www-data:www-data var \
+RUN mkdir -p var/cache var/log var/starter var/connector && chown -R www-data:www-data var \
     && echo "error_log=/var/www/cms/var/log/php.log" > /usr/local/etc/php/conf.d/cms-error-log.ini
 
 USER www-data

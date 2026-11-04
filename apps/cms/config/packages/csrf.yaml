@@ -10,3 +10,6 @@ framework:
             - authenticate
             - logout
             - starter_toggle
+            - starter_env
+            - starter_mount
+            - connector_tokens

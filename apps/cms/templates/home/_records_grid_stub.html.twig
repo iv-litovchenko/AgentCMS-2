@@ -16,7 +16,10 @@
 {% set grid_cols = is_compact ? 4 : 6 %}
 <section class="w-full rounded-lg border border-zinc-200 bg-white shadow-sm" aria-labelledby="records-grid-heading">
     <div class="border-b border-zinc-100 {{ is_compact ? 'px-3 py-2' : 'px-4 py-3' }}">
-        <h2 id="records-grid-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">Записи</h2>
+        <div class="flex flex-wrap items-center gap-2">
+            <h2 id="records-grid-heading" class="{{ is_compact ? 'text-xs' : 'text-sm' }} font-semibold text-zinc-900">Записи</h2>
+            {% include 'home/_section_todo_badge.html.twig' %}
+        </div>
         <p class="mt-0.5 text-xs text-zinc-500">Сетка записей — заготовка под выборку из хранилищ.</p>
     </div>
     <div class="grid grid-cols-4 gap-px border-b border-zinc-100 bg-zinc-200 sm:grid-cols-6">

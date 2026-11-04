@@ -3,14 +3,18 @@
 namespace App\Service;
 
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Yaml\Yaml;
 
 class StarterEnvironmentService
 {
     private string $appVersion;
 
-    public function __construct(string $appVersion)
+    private string $cliToolsRegistryPath;
+
+    public function __construct(string $appVersion, string $cliToolsRegistryPath)
     {
         $this->appVersion = $appVersion;
+        $this->cliToolsRegistryPath = $cliToolsRegistryPath;
     }
 
     /**
@@ -133,7 +137,110 @@ class StarterEnvironmentService
         $items[] = ['name' => 'ext-redis', 'version' => $this->extensionVersion('redis')];
         $items[] = ['name' => 'ext-opcache', 'version' => $this->extensionVersion('opcache')];
 
+        foreach ($this->buildCliToolVersions() as $tool) {
+            $items[] = $tool;
+        }
+
         return $items;
+    }
+
+    /**
+     * @return list<array{name: string, version: string}>
+     */
+    private function buildCliToolVersions(): array
+    {
+        if (!is_file($this->cliToolsRegistryPath)) {
+            return [];
+        }
+
+        $parsed = Yaml::parseFile($this->cliToolsRegistryPath);
+        if (!is_array($parsed)) {
+            return [];
+        }
+
+        $rawItems = $parsed['items'] ?? [];
+        if (!is_array($rawItems)) {
+            return [];
+        }
+
+        $items = [];
+        foreach ($rawItems as $rawItem) {
+            if (!is_array($rawItem)) {
+                continue;
+            }
+
+            $label = $rawItem['label'] ?? '';
+            if (!is_string($label) || $label === '') {
+                continue;
+            }
+
+            $binary = $rawItem['binary'] ?? $label;
+            if (!is_string($binary)) {
+                $binary = $label;
+            }
+
+            $versionArgs = $rawItem['version_args'] ?? ['--version'];
+            if (!is_array($versionArgs)) {
+                $versionArgs = ['--version'];
+            }
+
+            $version = $this->fetchCliToolVersion($binary, $versionArgs);
+            if ($version === null) {
+                $version = 'не установлено';
+            }
+
+            $items[] = [
+                'name' => $label,
+                'version' => $version,
+            ];
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param list<mixed> $versionArgs
+     */
+    private function fetchCliToolVersion(string $binary, array $versionArgs): ?string
+    {
+        if (!preg_match('/^[a-z0-9_-]+$/', $binary)) {
+            return null;
+        }
+
+        $commandParts = [escapeshellarg($binary)];
+        foreach ($versionArgs as $arg) {
+            if (!is_string($arg)) {
+                return null;
+            }
+            if (!preg_match('/^--?[a-zA-Z0-9-]+$/', $arg)) {
+                return null;
+            }
+            $commandParts[] = escapeshellarg($arg);
+        }
+
+        $command = implode(' ', $commandParts) . ' 2>/dev/null';
+        $output = [];
+        $exitCode = 0;
+        exec($command, $output, $exitCode);
+        if ($exitCode !== 0 || $output === []) {
+            return null;
+        }
+
+        $firstLine = $output[0];
+        if (!is_string($firstLine)) {
+            return null;
+        }
+
+        $firstLine = trim($firstLine);
+        if ($firstLine === '') {
+            return null;
+        }
+
+        if (strlen($firstLine) > 96) {
+            return substr($firstLine, 0, 93) . '...';
+        }
+
+        return $firstLine;
     }
 
     private function extensionVersion(string $extension): string

@@ -1,0 +1,14 @@
+# CLI в образе cms (Dockerfile). Версии — блок «Технологии» в Стартере.
+items:
+  - label: git
+    binary: git
+    version_args:
+      - --version
+  - label: bash
+    binary: bash
+    version_args:
+      - --version
+  - label: curl
+    binary: curl
+    version_args:
+      - --version

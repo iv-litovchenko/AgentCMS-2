@@ -48,7 +48,6 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'compact' => $compact,
-            'title' => 'Agent CMS Light',
             'demo_block' => $demoBlock,
             'storages' => $this->workspaceService->listForDisplay(),
         ]);

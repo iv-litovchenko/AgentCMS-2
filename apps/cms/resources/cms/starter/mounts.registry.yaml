@@ -1,0 +1,32 @@
+# Точки монтирования хост → cms (docker-compose override). Состояние — var/starter/mounts.yaml
+
+default_container_prefix: /var/www/mounts
+
+presets:
+  mac:
+    desktop:
+      label: Рабочий стол
+      host_path: /Users/macbook/Desktop
+      container_path: /var/www/mounts/desktop
+    downloads:
+      label: Загрузки
+      host_path: /Users/macbook/Downloads
+      container_path: /var/www/mounts/downloads
+  linux:
+    desktop:
+      label: Desktop
+      host_path: /home/user/Desktop
+      container_path: /var/www/mounts/desktop
+    downloads:
+      label: Downloads
+      host_path: /home/user/Downloads
+      container_path: /var/www/mounts/downloads
+  windows:
+    desktop:
+      label: Рабочий стол
+      host_path: C:/Users/user/Desktop
+      container_path: /var/www/mounts/desktop
+    downloads:
+      label: Загрузки
+      host_path: C:/Users/user/Downloads
+      container_path: /var/www/mounts/downloads

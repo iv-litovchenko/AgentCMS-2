@@ -1,0 +1,82 @@
+<section class="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+    <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 class="text-xs font-medium uppercase tracking-wide text-zinc-500">ENV</h2>
+        <p class="text-xs text-zinc-500">
+            реестр <span class="font-mono">env.registry.yaml</span> · значения <span class="font-mono">{{ starter_env_values_path }}</span> · применение через compose / .env
+        </p>
+    </div>
+
+    <div class="divide-y divide-zinc-100 rounded-md border border-zinc-100">
+        {% for group in starter_env_groups %}
+            <details class="group/env">
+                <summary class="cursor-pointer list-none px-3 py-2 text-sm font-medium text-zinc-900 hover:bg-zinc-50 [&::-webkit-details-marker]:hidden">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="text-zinc-400 transition group-open/env:rotate-90">›</span>
+                        {{ group.label }}
+                        <span class="font-normal text-zinc-500">{{ group.scope }}/{{ group.id }}</span>
+                        {% if group.variables is not empty %}
+                            <span class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs font-normal text-zinc-600">{{ group.variables|length }}</span>
+                        {% endif %}
+                    </span>
+                </summary>
+
+                <div class="border-t border-zinc-100 bg-zinc-50/50 px-3 pb-3 pt-2">
+                    {% if group.variables is empty %}
+                        <p class="text-xs text-zinc-500">Нет переменных в реестре.</p>
+                    {% else %}
+                        <form method="post" action="{{ path('starter_env_save') }}">
+                            <input type="hidden" name="scope" value="{{ group.scope }}">
+                            <input type="hidden" name="id" value="{{ group.id }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('starter_env') }}">
+
+                            <div class="overflow-x-auto rounded border border-zinc-100 bg-white">
+                                <table class="min-w-full text-left text-xs">
+                                    <thead class="border-b border-zinc-100 text-zinc-500">
+                                        <tr>
+                                            <th class="px-2 py-1.5 font-medium">Ключ</th>
+                                            <th class="px-2 py-1.5 font-medium">Сохранить</th>
+                                            <th class="hidden px-2 py-1.5 font-medium sm:table-cell">В процессе</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-zinc-50">
+                                        {% for var in group.variables %}
+                                            <tr class="align-middle">
+                                                <td class="max-w-[9rem] px-2 py-1.5 font-mono text-zinc-700" title="{{ var.description }}">
+                                                    {{ var.key }}
+                                                </td>
+                                                <td class="px-2 py-1">
+                                                    <input
+                                                        id="env-{{ group.scope }}-{{ group.id }}-{{ var.key }}"
+                                                        name="values[{{ var.key }}]"
+                                                        type="{% if var.sensitive %}password{% else %}text{% endif %}"
+                                                        value="{% if var.sensitive %}{% if var.stored is not null %}{{ var.stored }}{% endif %}{% else %}{{ var.effective }}{% endif %}"
+                                                        autocomplete="off"
+                                                        class="w-full min-w-[8rem] rounded border border-zinc-200 px-2 py-1 font-mono text-zinc-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                                        {% if var.sensitive %}placeholder="не менять"{% endif %}
+                                                    >
+                                                </td>
+                                                <td class="hidden max-w-[12rem] truncate px-2 py-1.5 font-mono text-zinc-400 sm:table-cell" title="default: {{ var.default }}">
+                                                    {% if var.sensitive and var.runtime != '' %}
+                                                        ••••
+                                                    {% else %}
+                                                        {{ var.runtime != '' ? var.runtime : '—' }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button type="submit" class="mt-2 rounded-md bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-800">
+                                Сохранить
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </details>
+        {% else %}
+            <p class="px-3 py-2 text-xs text-zinc-500">Реестр ENV пуст.</p>
+        {% endfor %}
+    </div>
+</section>
