@@ -1,0 +1,11 @@
+{
+  "name": "agent-cms-ui",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./assets/styles/app.css -o ./public/build/app.css --minify",
+    "watch": "tailwindcss -i ./assets/styles/app.css -o ./public/build/app.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

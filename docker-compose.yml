@@ -17,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: docker/proxy/Dockerfile
+    volumes:
+      - ./apps/cms/public:/var/www/cms/public:ro
     ports:
       - "8080:80"
       - "8443:443"

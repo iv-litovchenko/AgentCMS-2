@@ -36,6 +36,7 @@ deploy/certs/*.key
 apps/cms/var/connector/tokens.yaml
 
 # Build & tools
+/apps/cms/node_modules/
 /dist/
 /build/
 /.npm/

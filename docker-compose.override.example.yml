@@ -2,6 +2,7 @@
 # Скопируйте: cp docker-compose.override.example.yml docker-compose.override.yml
 # Compose подхватит override автоматически при `docker compose up`.
 # HTTPS без предупреждения браузера: ./scripts/tls-dev-setup.sh и -f docker-compose.tls-dev.yml
+# CSS (Tailwind): ./scripts/npm-build.sh или cd apps/cms && npm run watch
 #
 # Монтируется:
 #   apps/cms      → /var/www/cms
